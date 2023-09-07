@@ -43,4 +43,4 @@ jobs:
           git config --global user.email "gradli.inc@gmail.com"
           git config --global user.name "Andriiklymiuk"
           pnpm install --frozen-lockfile
-          pnpm deploy
+          pnpm deployDocs
