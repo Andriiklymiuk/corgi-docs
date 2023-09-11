@@ -17,22 +17,23 @@ function HomepageHeader() {
         <h1 className="hero__title">{siteConfig.title}</h1>
         <p className="hero__subtitle">{siteConfig.tagline}</p>
         <CodeBlock className={clsx('language-bash', styles.codeBlock)}>
-          {"# Quick install ⬇️\n\nbrew install andriiklymiuk/homebrew-tools/corgi"}
+          {"# Quick install ⬇️\nbrew install andriiklymiuk/homebrew-tools/corgi\n\ncorgi help # to show some helpful commands"}
         </CodeBlock>
-        <div className={styles.buttons}>
-          <Link
-            className="button button--secondary button--lg"
-            to="/docs/intro">
-            Woof explanations - 10 min ⏱️
-          </Link>
-        </div>
-
-        <div className={styles.buttons}>
-          <Link
-            className={clsx('button button--secondary button--lg', styles.outlinedButton)}
-            to="https://marketplace.visualstudio.com/items?itemName=Corgi.corgi">
-            {"</>"} Vscode extension
-          </Link>
+        <div>
+          <div className={styles.buttons}>
+            <Link
+              className="button button--secondary button--lg"
+              to="/docs/intro">
+              Woof explanations - 10 min ⏱️
+            </Link>
+          </div>
+          <div className={styles.buttons}>
+            <Link
+              className={clsx('button button--secondary button--lg', styles.outlinedButton)}
+              to="https://marketplace.visualstudio.com/items?itemName=Corgi.corgi">
+              {"</>"} Vscode extension
+            </Link>
+          </div>
         </div>
       </div>
     </header>
