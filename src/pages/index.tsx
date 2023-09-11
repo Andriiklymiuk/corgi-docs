@@ -62,6 +62,7 @@ export default function Home(): JSX.Element {
         <meta name="msapplication-TileColor" content="#ffffff" />
         <meta name="msapplication-TileImage" content="img/browser/ms-icon-144x144.png" />
         <meta name="theme-color" content="#ffffff" />
+        <link rel="shortcut icon" href="img/favicon.ico" />
       </Head>
       <Layout
         description="Corgi docs for how to use corgi cli">
