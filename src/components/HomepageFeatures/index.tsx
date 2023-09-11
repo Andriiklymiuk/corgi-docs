@@ -10,43 +10,59 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Easy to Use',
-    Svg: require('@site/static/img/undraw_docusaurus_mountain.svg').default,
+    title: '👩‍💻🫱🏽‍🫲🏾🧑🏻‍💻 Made for fullstack',
     description: (
       <>
-        Docusaurus was designed from the ground up to be easily installed and
-        used to get your website up and running quickly.
+        You can start any server, app, website inside of corgi easily. <code>.env</code> will be wired up and ready to go in each one.
       </>
     ),
   },
   {
-    title: 'Focus on What Matters',
-    Svg: require('@site/static/img/undraw_docusaurus_tree.svg').default,
+    title: '🙌 Pizza circle',
     description: (
       <>
-        Docusaurus lets you focus on your docs, and we&apos;ll do the chores. Go
-        ahead and move your docs into the <code>docs</code> directory.
+        Corgi is designed for teams, so you can share your setup (populated database, required tech, etc)
+        and your peers reproduce whatever is going on in minutes.
       </>
     ),
   },
   {
-    title: 'Powered by React',
-    Svg: require('@site/static/img/undraw_docusaurus_react.svg').default,
+    title: '🛠️ Useful tools',
     description: (
       <>
-        Extend or customize your website layout by reusing React. Docusaurus can
-        be extended while reusing the same header and footer.
+        We also include some helpful things, like auto opening docker on db starts and db population from your data, so you don't have to.
+      </>
+    ),
+  },
+  {
+    title: '👓 Transparent',
+    description: (
+      <>
+        When you create database service, it created files on your local, as helpers, so you understand what is going on.
+      </>
+    ),
+  },
+  {
+    title: '🚀 Written in Go',
+    description: (
+      <>
+        It is written in go, so it is pretty fast. Services run concurrently when it is useful.
+      </>
+    ),
+  },
+  {
+    title: '💪 Brings you up to speed',
+    description: (
+      <>
+        Save a lot of time in context switching between projects and laptops.
       </>
     ),
   },
 ];
 
-function Feature({title, Svg, description}: FeatureItem) {
+function Feature({ title, description }: FeatureItem) {
   return (
     <div className={clsx('col col--4')}>
-      <div className="text--center">
-        <Svg className={styles.featureSvg} role="img" />
-      </div>
       <div className="text--center padding-horiz--md">
         <h3>{title}</h3>
         <p>{description}</p>
