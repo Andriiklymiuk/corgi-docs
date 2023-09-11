@@ -130,7 +130,7 @@ const config = {
         respectPrefersColorScheme: true,
       },
       metadata: [
-        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:card', content: 'summary' },
         { name: 'twitter:site', content: '@andriiklymiuk.github.io/corgi/' }
       ],
     }),
