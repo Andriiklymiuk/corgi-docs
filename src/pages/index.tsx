@@ -65,7 +65,7 @@ export default function Home(): JSX.Element {
         <link rel="shortcut icon" href="img/favicon.ico" />
       </Head>
       <Layout
-        description="Corgi docs for how to use corgi cli">
+        description="Compose and share projects with your peers">
         <HomepageHeader />
         <main>
           <HomepageFeatures />
