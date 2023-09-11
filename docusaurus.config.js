@@ -129,6 +129,10 @@ const config = {
       colorMode: {
         respectPrefersColorScheme: true,
       },
+      metadata: [
+        { name: 'twitter:card', content: 'summary_large_image' },
+        { name: 'twitter:site', content: '@andriiklymiuk.github.io/corgi/' }
+      ],
     }),
   themes: [
     [
