@@ -21,8 +21,8 @@ const FeatureList: FeatureItem[] = [
     title: '🙌 Pizza circle',
     description: (
       <>
-        Corgi is designed for teams, so you can share your setup (populated database, required tech, etc)
-        and your peers reproduce whatever is going on in minutes.
+        Corgi is designed for teams, so you can share your setup (populated database, required tech, etc),
+        and your peers can reproduce whatever is going on in minutes.
       </>
     ),
   },
