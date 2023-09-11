@@ -4,6 +4,7 @@ import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
+import CodeBlock from '@theme/CodeBlock'
 
 import styles from './index.module.css';
 import Head from '@docusaurus/Head';
@@ -15,11 +16,22 @@ function HomepageHeader() {
       <div className="container">
         <h1 className="hero__title">{siteConfig.title}</h1>
         <p className="hero__subtitle">{siteConfig.tagline}</p>
+        <CodeBlock className={clsx('language-bash', styles.codeBlock)}>
+          {"# Quick install ⬇️\n\nbrew install andriiklymiuk/homebrew-tools/corgi"}
+        </CodeBlock>
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
             to="/docs/intro">
             Woof explanations - 10 min ⏱️
+          </Link>
+        </div>
+
+        <div className={styles.buttons}>
+          <Link
+            className={clsx('button button--secondary button--lg', styles.outlinedButton)}
+            to="https://marketplace.visualstudio.com/items?itemName=Corgi.corgi">
+            {"</>"} Vscode extension
           </Link>
         </div>
       </div>

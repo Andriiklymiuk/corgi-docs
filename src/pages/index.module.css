@@ -21,3 +21,15 @@
   align-items: center;
   justify-content: center;
 }
+
+.outlinedButton {
+  background-color: transparent;
+  margin-top: 1rem;
+}
+
+.codeBlock {
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: start;
+}

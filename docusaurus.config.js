@@ -85,7 +85,7 @@ const config = {
           },
           {
             href: 'https://marketplace.visualstudio.com/items?itemName=Corgi.corgi',
-            label: 'VsCode',
+            label: 'Vscode',
             position: 'right',
           },
         ],
