@@ -6,7 +6,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 
 /** @type {import('@docusaurus/types').Config} */
 const config = {
-  title: '🐶 Corgi docs',
+  title: 'Corgi docs 🐶',
   tagline: '"It works on my local" - for you and your peers',
   favicon: 'img/favicon.ico',
 
