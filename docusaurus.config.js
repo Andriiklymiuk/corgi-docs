@@ -21,7 +21,7 @@ const config = {
   organizationName: 'andriiklymiuk', // Usually your GitHub org/user name.
   projectName: 'corgi', // Usually your repo name.
   trailingSlash: false,
-  
+
   onBrokenLinks: 'throw',
   onBrokenMarkdownLinks: 'warn',
 
@@ -77,7 +77,7 @@ const config = {
             position: 'left',
             label: 'Tutorial',
           },
-          {to: '/blog', label: 'Blog', position: 'left'},
+          { to: '/blog', label: 'Blog', position: 'left' },
           {
             href: 'https://github.com/andriiklymiuk/corgi',
             label: 'GitHub',
@@ -125,6 +125,9 @@ const config = {
       prism: {
         theme: lightCodeTheme,
         darkTheme: darkCodeTheme,
+      },
+      colorMode: {
+        respectPrefersColorScheme: true,
       },
     }),
 };
