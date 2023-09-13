@@ -120,7 +120,7 @@ const config = {
             ],
           },
         ],
-        copyright: `Copyright © ${new Date().getFullYear()} Corgi cli, by Andrii Klymiuk.`,
+        copyright: `Copyright © ${new Date().getFullYear()} Corgi cli, by Andrii Klymiuk. - <a href="https://www.freepik.com/free-vector/cute-corgi-dog-astronaut-floating-space-cartoon-vector-icon-illustration-animal-science-icon-concept-isolated-premium-vector-flat-cartoon-style_22271104.htm#query=corgi%20icon&position=7&from_view=keyword">Corgi image by catalyststuff</a> on Freepik`,
       },
       prism: {
         theme: lightCodeTheme,
