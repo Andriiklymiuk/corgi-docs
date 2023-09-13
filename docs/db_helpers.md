@@ -4,6 +4,8 @@ sidebar_position: 5
 
 # How to run db helpers
 
+![Db everywhere](/img/db_everywhere_meme.jpg)
+
 These are helpers command for your db_services.
 
 ```bash

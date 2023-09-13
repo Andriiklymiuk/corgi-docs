@@ -4,6 +4,8 @@ sidebar_position: 2
 
 # What is my purpose?
 
+![Purpose](/img/purpose.jpeg)
+
 As we expand services and go towards microservices architecture, we need to
 somehow test many databases, that are started and run locally.
 

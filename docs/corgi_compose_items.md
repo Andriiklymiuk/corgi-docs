@@ -4,6 +4,8 @@ sidebar_position: 3
 
 # Corgi compose items
 
+![Links meme](/img/links_meme.jpg)
+
 Examples of these items usage can be found in
 [examples repo](https://github.com/Andriiklymiuk/corgi_examples).
 

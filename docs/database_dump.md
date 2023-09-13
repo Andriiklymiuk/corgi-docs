@@ -4,8 +4,9 @@ sidebar_position: 6
 
 # Create database dump
 
-**👋 How we can create a dump of the database? Let's go guys and follow the
-guide!**
+![Db everywhere](/img/db_backup_meme.jpg)
+
+**👋 How we can create a dump of the database? Let's go and follow the guide!**
 
 ## Some requirements before starting:
 
