@@ -2,54 +2,82 @@
 sidebar_position: 1
 ---
 
-# Tutorial Intro
+# Getting started
 
 Let's discover **Corgi in less than 10 minutes**.
 
-## Getting Started
+![Corgi logo](/img/corgi.png)
 
-Get started by **creating a new site**.
+Send someone your project yml file, init and run it in minutes.
 
-Or **try Docusaurus immediately** with
-**[docusaurus.new](https://docusaurus.new)**.
+No more long meetings, explanations of how to run new project with multiple
+microservices and configs. Just send corgi-compose.yml file to your team and
+corgi will do the rest.
 
-### What you'll need
+Auto git cloning, db seeding, concurrent running and much more.
 
-- [Node.js](https://nodejs.org/en/download/) version 16.14 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related
-    to dependencies.
+While in services you can create whatever you want, but in db services **for now
+it supports**:
 
-## Generate a new site
+- postgres
+- mongodb
+- rabbitmq
+- sqs
+- redis
+- mysql (experimental)
+- dynamoDb (experimental)
 
-Generate a new Docusaurus site using the **classic template**.
-
-The classic template will automatically be added to your project after you run
-the command:
-
-```bash
-npm init docusaurus@latest my-website classic
-```
-
-You can type this command into Command Prompt, Powershell, Terminal, or any
-other integrated terminal of your code editor.
-
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Start your site
-
-Run the development server:
+### Quick install with [Homebrew](https://brew.sh)
 
 ```bash
-cd my-website
-npm run start
+brew install andriiklymiuk/homebrew-tools/corgi
+
+# ask for help to check if it works
+corgi -h
 ```
 
-The `cd` command changes the directory you're working with. In order to work
-with your newly created Docusaurus site, you'll need to navigate the terminal
-there.
+It will install it globally.
 
-The `npm run start` command builds your website locally and serves it through a
-development server, ready for you to view at http://localhost:3000/.
+With it you can run `corgi` in any folder on your local.
 
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads
-automatically** and displays your changes.
+[Create service file](#services-creation), if you want to run corgi.
+
+## Services creation
+
+Corgi has several concepts to understand:
+
+- db_services - database configs to use when doing creation/seeding/etc
+- services - project folders to use for corgi. Can be server, app, anything you
+  can imagine
+- required - programs needed for running your project successfully
+  (node,yarn,go,whatever you want). They are checked on init
+
+These items are added to corgi-compose.yml file to create services, db services
+and check for required software.
+
+Examples of corgi-compose.yml files are in
+[examples repo](https://github.com/Andriiklymiuk/corgi_examples). You can also
+check what should be in corgi-compose.yml by running `corgi docs`. It will print
+out all possible items in corgi .yml file or you can go to
+[corgi compose items doc](corgi_compose_items) to see what the syntax and
+possible values of corgi-compose.yml
+
+After creating corgi-compose.yml file, you can run to create db folders, clone
+git repos, etc.
+
+```bash
+corgi init
+```
+
+If you want to just run services and already created db_services:
+
+```bash
+corgi run
+```
+
+_**Tip**_: there can be as many services as you wish. But create it with
+different ports to be able to run in all at the same time, if you want.
+
+You can read of what exactly happens on
+[run](why_it_exists#what-happens-on-init) or on
+[init](why_it_exists#what-happens-on-init) to better understand corgi logic.
