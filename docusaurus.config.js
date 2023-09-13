@@ -97,8 +97,12 @@ const config = {
             title: 'Docs',
             items: [
               {
-                label: 'Tutorial',
+                label: 'Getting started',
                 to: '/docs/intro',
+              },
+              {
+                label: 'Commands',
+                to: '/docs/category/commands',
               },
             ],
           },
