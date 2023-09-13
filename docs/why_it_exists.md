@@ -56,7 +56,7 @@ services:
 required:
   go:
     why:
-      - To launch locally sync-go-trigger service manually
+      - To launch locally go service manually
       - You need to install it yourself brew install go
     checkCmd: go version
   yarn:
