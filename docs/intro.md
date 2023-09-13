@@ -42,6 +42,13 @@ With it you can run `corgi` in any folder on your local.
 
 [Create service file](#services-creation), if you want to run corgi.
 
+### Vscode extension
+
+We also recommend installing
+[corgi vscode extension](https://marketplace.visualstudio.com/items?itemName=Corgi.corgi)
+which has syntax helpers, autocompletion and commonly used commands. You can
+check and run corgi showcase examples from extension too.
+
 ## Services creation
 
 Corgi has several concepts to understand:
