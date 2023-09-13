@@ -1,10 +1,7 @@
-.PHONY: start run build serve
+.PHONY: start build serve
 
 start:
 	bun start
-
-run:
-	bun run
 
 build:
 	bun run build
