@@ -16,11 +16,12 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-      - uses: oven-sh/setup-bun@v1
+      - name: Install pnpm
+        run: npm install -g pnpm
       - name: Install dependencies
-        run: bun install --frozen-lockfile
+        run: pnpm install --frozen-lockfile
       - name: Test build website
-        run: bun run build
+        run: pnpm build
   deploy:
     if: github.event_name != 'pull_request'
     runs-on: ubuntu-latest
@@ -30,7 +31,8 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: 18
-      - uses: oven-sh/setup-bun@v1
+      - name: Install pnpm
+        run: npm install -g pnpm
       - uses: webfactory/ssh-agent@v0.5.0
         with:
           ssh-private-key: ${{ secrets.GH_PAGES_DEPLOY }}
@@ -40,5 +42,5 @@ jobs:
         run: |
           git config --global user.email "gradli.inc@gmail.com"
           git config --global user.name "Andriiklymiuk"
-          bun install --frozen-lockfile
-          bun deployDocs
+          pnpm install --frozen-lockfile
+          pnpm deployDocs
