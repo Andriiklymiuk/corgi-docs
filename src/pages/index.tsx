@@ -59,9 +59,7 @@ export default function Home(): JSX.Element {
         <link rel="icon" type="image/png" sizes="96x96" href="img/browser/favicon-96x96.png" />
         <link rel="icon" type="image/png" sizes="16x16" href="img/browser/favicon-16x16.png" />
         <link rel="manifest" href="img/browser/manifest.json" />
-        <meta name="msapplication-TileColor" content="#ffffff" />
         <meta name="msapplication-TileImage" content="img/browser/ms-icon-144x144.png" />
-        <meta name="theme-color" content="#ffffff" />
         <link rel="shortcut icon" href="img/favicon.ico" />
       </Head>
       <Layout
