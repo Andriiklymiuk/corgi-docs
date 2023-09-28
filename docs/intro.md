@@ -26,6 +26,7 @@ it supports**:
 - [redis](https://github.com/Andriiklymiuk/corgi_examples/blob/main/redis/redis-bun-expo.corgi-compose.yml)
 - mysql (experimental)
 - dynamoDb (experimental)
+- kafka (experimental)
 
 ### Quick install with [Homebrew](https://brew.sh)
 
