@@ -27,6 +27,7 @@ it supports**:
 - mysql (experimental)
 - dynamodb (experimental)
 - kafka (experimental)
+- mssql (experimental)
 
 ### Quick install with [Homebrew](https://brew.sh)
 
