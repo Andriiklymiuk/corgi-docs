@@ -28,6 +28,8 @@ it supports**:
 - dynamodb (experimental)
 - kafka (experimental)
 - mssql (experimental)
+- cassandra (experimental)
+- cockroach (experimental)
 
 ### Quick install with [Homebrew](https://brew.sh)
 
