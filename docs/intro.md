@@ -24,12 +24,13 @@ it supports**:
 - [rabbitmq](https://github.com/Andriiklymiuk/corgi_examples/blob/main/rabbitmq/rabbitmq-go-nestjs.corgi-compose.yml)
 - [aws sqs](https://github.com/Andriiklymiuk/corgi_examples/blob/main/aws_sqs/aws_sqs_postgres_go_deno.corgi-compose.yml)
 - [redis](https://github.com/Andriiklymiuk/corgi_examples/blob/main/redis/redis-bun-expo.corgi-compose.yml)
-- mysql (experimental)
-- dynamodb (experimental)
-- kafka (experimental)
-- mssql (experimental)
-- cassandra (experimental)
-- cockroach (experimental)
+- mysql
+- dynamodb
+- kafka
+- mssql
+- cassandra
+- cockroach
+- clickhouse
 
 ### Quick install with [Homebrew](https://brew.sh)
 
