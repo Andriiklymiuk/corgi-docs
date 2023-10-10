@@ -33,6 +33,7 @@ it supports**:
 - cockroach
 - clickhouse
 - scylla
+- keydb
 
 ### Quick install with [Homebrew](https://brew.sh)
 
