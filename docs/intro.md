@@ -32,6 +32,7 @@ it supports**:
 - cassandra
 - cockroach
 - clickhouse
+- scylla
 
 ### Quick install with [Homebrew](https://brew.sh)
 
