@@ -34,6 +34,8 @@ it supports**:
 - clickhouse
 - scylla
 - keydb
+- influxdb
+- surrealdb
 
 ### Quick install with [Homebrew](https://brew.sh)
 
