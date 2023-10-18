@@ -36,6 +36,8 @@ it supports**:
 - keydb
 - influxdb
 - surrealdb
+- arangodb
+- neo4j
 
 ### Quick install with [Homebrew](https://brew.sh)
 
