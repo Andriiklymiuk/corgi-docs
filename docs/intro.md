@@ -38,6 +38,7 @@ it supports**:
 - surrealdb
 - arangodb
 - neo4j
+- elasticsearch
 
 ### Quick install with [Homebrew](https://brew.sh)
 
