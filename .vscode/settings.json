@@ -3,6 +3,7 @@
     "arangodb",
     "clickhouse",
     "keydb",
-    "surrealdb"
+    "surrealdb",
+    "timescaledb"
   ]
 }
