@@ -39,6 +39,7 @@ it supports**:
 - arangodb
 - neo4j
 - elasticsearch
+- timescaledb
 
 ### Quick install with [Homebrew](https://brew.sh)
 
