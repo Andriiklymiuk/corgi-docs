@@ -40,6 +40,7 @@ it supports**:
 - neo4j
 - elasticsearch
 - timescaledb
+- couchdb
 
 ### Quick install with [Homebrew](https://brew.sh)
 
