@@ -3,6 +3,7 @@
     "arangodb",
     "clickhouse",
     "dgraph",
+    "faunadb",
     "keydb",
     "meilisearch",
     "surrealdb",
