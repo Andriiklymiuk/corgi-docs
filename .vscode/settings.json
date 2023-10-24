@@ -2,6 +2,7 @@
   "cSpell.words": [
     "arangodb",
     "clickhouse",
+    "dgraph",
     "keydb",
     "surrealdb",
     "timescaledb"
