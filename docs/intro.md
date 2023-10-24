@@ -41,6 +41,7 @@ it supports**:
 - elasticsearch
 - timescaledb
 - couchdb
+- dgraph
 
 ### Quick install with [Homebrew](https://brew.sh)
 
