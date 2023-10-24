@@ -43,6 +43,7 @@ it supports**:
 - couchdb
 - dgraph
 - meilisearch
+- faunadb
 
 ### Quick install with [Homebrew](https://brew.sh)
 
