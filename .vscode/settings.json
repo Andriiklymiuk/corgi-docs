@@ -4,6 +4,7 @@
     "clickhouse",
     "dgraph",
     "keydb",
+    "meilisearch",
     "surrealdb",
     "timescaledb"
   ]

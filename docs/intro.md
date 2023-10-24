@@ -42,6 +42,7 @@ it supports**:
 - timescaledb
 - couchdb
 - dgraph
+- meilisearch
 
 ### Quick install with [Homebrew](https://brew.sh)
 
