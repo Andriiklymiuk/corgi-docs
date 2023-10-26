@@ -44,6 +44,7 @@ it supports**:
 - dgraph
 - meilisearch
 - faunadb
+- yugabytedb
 
 ### Quick install with [Homebrew](https://brew.sh)
 
