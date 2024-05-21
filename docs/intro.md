@@ -16,36 +16,39 @@ corgi will do the rest.
 
 Auto git cloning, db seeding, concurrent running and much more.
 
-While in services you can create whatever you want, but in db services **for now
-it supports**:
+While in services you can create whatever you want, but in db services **for now it supports**:
 
-- [postgres](https://github.com/Andriiklymiuk/corgi_examples/tree/main/postgres)
-- [mongodb](https://github.com/Andriiklymiuk/corgi_examples/blob/main/mongodb/mongodb-go.corgi-compose.yml)
-- [rabbitmq](https://github.com/Andriiklymiuk/corgi_examples/blob/main/rabbitmq/rabbitmq-go-nestjs.corgi-compose.yml)
-- [aws sqs](https://github.com/Andriiklymiuk/corgi_examples/blob/main/aws_sqs/aws_sqs_postgres_go_deno.corgi-compose.yml)
-- [redis](https://github.com/Andriiklymiuk/corgi_examples/blob/main/redis/redis-bun-expo.corgi-compose.yml)
+- postgres, [example](https://github.com/Andriiklymiuk/corgi_examples/tree/main/postgres)
+- mongodb, [example](https://github.com/Andriiklymiuk/corgi_examples/blob/main/mongodb/mongodb-go.corgi-compose.yml)
+- rabbitmq, [example](https://github.com/Andriiklymiuk/corgi_examples/blob/main/rabbitmq/rabbitmq-go-nestjs.corgi-compose.yml)
+- aws sqs, [example](https://github.com/Andriiklymiuk/corgi_examples/blob/main/aws_sqs/aws_sqs_postgres_go_deno.corgi-compose.yml)
+- redis, [example](https://github.com/Andriiklymiuk/corgi_examples/blob/main/redis/redis-bun-expo.corgi-compose.yml)
 - redis-server
 - mysql
-- mariadb
-- dynamodb
-- kafka
-- mssql
-- cassandra
-- cockroach
-- clickhouse
-- scylla
-- keydb
-- influxdb
-- surrealdb
-- arangodb
-- neo4j
-- elasticsearch
-- timescaledb
-- couchdb
-- dgraph
-- meilisearch
-- faunadb
-- yugabytedb
+- [mariadb](https://mariadb.org)
+- [dynamodb](https://aws.amazon.com/dynamodb/)
+- [kafka](https://kafka.apache.org)
+- [mssql](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
+- [cassandra](https://cassandra.apache.org/_/index.html)
+- [cockroachDb](https://www.cockroachlabs.com)
+- [clickhouse](https://clickhouse.com)
+- [scylla](https://www.scylladb.com)
+- [keydb](https://docs.keydb.dev)
+- [influxdb](https://www.influxdata.com)
+- [surrealdb](https://surrealdb.com)
+- [neo4j](https://neo4j.com)
+- [arangodb](https://arangodb.com)
+- [elasticsearch](https://www.elastic.co/elasticsearch#)
+- [timescaledb](https://www.timescale.com)
+- [couchdb](https://couchdb.apache.org)
+- [dgraph](https://dgraph.io)
+- [meilisearch](https://www.meilisearch.com)
+- [faunadb](https://fauna.com)
+- [yugabytedb](https://www.yugabyte.com)
+- [skytable](https://skytable.io)
+- [dragonfly](https://www.dragonflydb.io)
+- [redict](https://redict.io)
+- [valkey](https://github.com/valkey-io/valkey)
 
 ### Quick install with [Homebrew](https://brew.sh)
 
@@ -61,6 +64,11 @@ It will install it globally.
 With it you can run `corgi` in any folder on your local.
 
 [Create service file](#services-creation), if you want to run corgi.
+
+Try it with expo + hono server example
+```bash
+corgi run -t https://github.com/Andriiklymiuk/corgi_examples/blob/main/honoExpoTodo/hono-bun-expo.corgi-compose.yml
+```
 
 ### Vscode extension
 
