@@ -17,7 +17,7 @@ function HomepageHeader() {
         <h1 className="hero__title">{siteConfig.title}</h1>
         <p className="hero__subtitle">{siteConfig.tagline}</p>
         <CodeBlock className={clsx('language-bash', styles.codeBlock)}>
-          {"# Quick install ⬇️\nbrew install andriiklymiuk/homebrew-tools/corgi\n\ncorgi help # to show some helpful commands"}
+          {"# Quick install ⬇️\nbrew install andriiklymiuk/homebrew-tools/corgi\n\ncorgi help # to show some helpful commands\n# Try expo app and hono server example\ncorgi run -t https://github.com/Andriiklymiuk/corgi_examples/blob/main/honoExpoTodo/hono-bun-expo.corgi-compose.yml"}
         </CodeBlock>
         <div>
           <div className={styles.buttons}>
