@@ -29,7 +29,7 @@ function HomepageHeader() {
           <div className={styles.buttons}>
             <Link
               className={clsx('button button--secondary button--lg', styles.outlinedButton)}
-              to="https://marketplace.visualstudio.com/items?itemName=Corgi.corgi">
+              to="https://marketplace.visualstudio.com/items?itemName=andriiklymiuk.corgi-checker">
               {"</>"} Vscode extension
             </Link>
           </div>
