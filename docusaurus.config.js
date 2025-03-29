@@ -84,7 +84,7 @@ const config = {
             position: 'right',
           },
           {
-            href: 'https://marketplace.visualstudio.com/items?itemName=Corgi.corgi',
+            href: 'https://marketplace.visualstudio.com/items?itemName=andriiklymiuk.corgi-checker',
             label: 'Vscode',
             position: 'right',
           },
@@ -119,7 +119,7 @@ const config = {
               },
               {
                 label: 'Vscode extension',
-                href: 'https://marketplace.visualstudio.com/items?itemName=Corgi.corgi',
+                href: 'https://marketplace.visualstudio.com/items?itemName=andriiklymiuk.corgi-checker',
               },
             ],
           },
