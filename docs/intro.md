@@ -74,7 +74,7 @@ corgi run -t https://github.com/Andriiklymiuk/corgi_examples/blob/main/honoExpoT
 ### Vscode extension
 
 We also recommend installing
-[corgi vscode extension](https://marketplace.visualstudio.com/items?itemName=andriiklymiuk.corgi-checker)
+[corgi vscode extension](https://marketplace.visualstudio.com/items?itemName=Corgi.corgi)
 which has syntax helpers, autocompletion and commonly used commands. You can
 check and run corgi showcase examples from extension too.
 
