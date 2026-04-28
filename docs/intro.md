@@ -49,24 +49,59 @@ While in services you can create whatever you want, but in db services **for now
 - [dragonfly](https://www.dragonflydb.io)
 - [redict](https://redict.io)
 - [valkey](https://github.com/valkey-io/valkey)
-- [s3](https://docs.localstack.cloud/user-guide/aws/s3/)
+- [postgis](https://postgis.net)
+- [pgvector](https://github.com/pgvector/pgvector) — postgres + `pgvector` extension. Uses prefix `DB_`, same as plain `postgres`
+- [localstack](https://docs.localstack.cloud/) — single container for multiple AWS services (sqs, s3, …), with `queues` / `buckets` auto-created from config
 
-### Quick install with [Homebrew](https://brew.sh)
+## Preflight & healthcheck
+
+- `corgi doctor` (alias: `check`) — before `corgi run`: verifies every tool in `required:`, Docker is up, and every port in `db_services.*.port` / `services.*.port` is free (lists the offending process if not)
+- `corgi status` (aliases: `health`, `healthcheck`) — after `corgi run`: TCP-probes every declared port. If a service sets `healthCheck: /some/path`, corgi does an HTTP probe and accepts any non-5xx response as healthy. The `localstack` driver defaults to `GET /_localstack/health`.
+
+## Install
+
+After install, `corgi` is available globally — run it from any folder.
+
+### macOS / Linux — [Homebrew](https://brew.sh)
 
 ```bash
 brew install andriiklymiuk/homebrew-tools/corgi
+```
 
-# ask for help to check if it works
+### macOS / Linux — install script
+
+No Homebrew? One-liner that picks the right OS/arch binary from GitHub releases:
+
+```bash
+curl -fsSL https://raw.githubusercontent.com/Andriiklymiuk/corgi/main/install.sh | sh
+```
+
+Installs to `/usr/local/bin` if writable, otherwise `~/.local/bin` (auto-added to PATH for zsh/bash/fish).
+
+Useful overrides:
+
+- `CORGI_VERSION=1.10.0` — pin a version
+- `CORGI_INSTALL_DIR=$HOME/bin` — force a directory
+- `CORGI_NO_MODIFY_PATH=1` — don't touch shell rc files
+
+### Windows — PowerShell
+
+```powershell
+irm https://raw.githubusercontent.com/Andriiklymiuk/corgi/main/install.ps1 | iex
+```
+
+Installs to `%LOCALAPPDATA%\corgi\bin` and adds it to your user PATH.
+
+### Verify
+
+```bash
 corgi -h
 ```
 
-It will install it globally.
+`corgi update` (alias `corgi upgrade`) detects how you installed and uses the matching method to upgrade.
 
-With it you can run `corgi` in any folder on your local.
+Try it with expo + hono server example:
 
-[Create service file](#services-creation), if you want to run corgi.
-
-Try it with expo + hono server example
 ```bash
 corgi run -t https://github.com/Andriiklymiuk/corgi_examples/blob/main/honoExpoTodo/hono-bun-expo.corgi-compose.yml
 ```
@@ -77,6 +112,17 @@ We also recommend installing
 [corgi vscode extension](https://marketplace.visualstudio.com/items?itemName=Corgi.corgi)
 which has syntax helpers, autocompletion and commonly used commands. You can
 check and run corgi showcase examples from extension too.
+
+### Claude Code users
+
+This repo ships a [Claude Code](https://claude.com/claude-code) plugin so an AI agent can author your `corgi-compose.yml`, run corgi, and debug failures accurately.
+
+```
+/plugin marketplace add Andriiklymiuk/corgi
+/plugin install corgi@corgi
+```
+
+Then in any project that has a `corgi-compose.yml`, Claude will recognize it and use `corgi run` / `corgi doctor` / `corgi status` instead of inventing its own commands. A `/corgi-new` slash command scaffolds a fresh `corgi-compose.yml` from a short conversation.
 
 ## Services creation
 
