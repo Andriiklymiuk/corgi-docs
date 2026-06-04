@@ -75,6 +75,19 @@ Use the arrow keys to navigate: ↓ ↑ → ←
 ↓   up
 ```
 
+## Open a SQL shell
+
+Jump straight into a running database — credentials come from
+`corgi-compose.yml`, no copy-pasting passwords:
+
+```bash
+corgi db shell backoffice                       # interactive psql/mysql/mongosh/…
+corgi db shell backoffice -e "select 1"         # one-off query
+corgi db shell backoffice -e "select 1" --json  # → {"service","output"} for scripts/agents
+```
+
+The container must be running (`corgi run` or `corgi db --upAll`).
+
 ## Database seeding
 
 If you want to do seeding manually to do database seeding (population with

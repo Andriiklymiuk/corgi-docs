@@ -87,7 +87,7 @@ required:
 3. If the path provided doesn't exist and cloneFrom is provided, than it will
    run git clone with provided url. So, for example, you provide path to
    service: `./myWoofServices/corgiserver`, than it will run git clone in
-   `./myWoofServices/` folder. **Bare in mind**, that git clone should create
+   `./myWoofServices/` folder. **Bear in mind**, that git clone should create
    `corgiserver` folder to correctly work.
 
 ## What happens on run
@@ -119,6 +119,24 @@ If you run `corgi run` it will:
 - terminate all services and their scripts
 - stop all databases
 - runs all `afterStart` commands
+
+## Beyond a plain run
+
+A few commands round out the day-to-day loop:
+
+- **`corgi doctor`** — preflight before `run`: checks every tool in `required:`,
+  that Docker is up, and that all ports are free. `--fix` auto-remediates.
+- **`corgi status`** (`-w` watch, `-r` ready) — probes each service's port (and
+  `healthCheck:` path) and reports healthy / unhealthy.
+- **`corgi run --detach`** — start everything in the background, write
+  `corgi_services/.state.json`, and return immediately; manage it later with
+  `corgi ps` / `corgi stop`.
+- **`corgi run --service-branch api=feature/x`** — run a single service on a git
+  branch in an isolated worktree, without touching your checkout. See
+  [Run a branch or worktree](branch_and_worktree).
+
+Scripts, JSON output, and the full flag set are in the
+[command reference](commands/corgi) and the [AI agents](ai_agents) guide.
 
 ## Why GO?
 

@@ -163,3 +163,12 @@ different ports to be able to run in all at the same time, if you want.
 You can read of what exactly happens on
 [run](why_it_exists#what-happens-on-init) or on
 [init](why_it_exists#what-happens-on-init) to better understand corgi logic.
+
+## Next steps
+
+- [Run a branch or worktree](branch_and_worktree) — run any service on a git branch
+  or external checkout for a single run, no `corgi-compose.yml` edit.
+- [AI agents](ai_agents) — drive corgi non-interactively from scripts or an LLM:
+  JSON output, stable exit/error codes, detached lifecycle, and the Claude Code plugin.
+- [corgi-compose.yml items](corgi_compose_items) — every field you can set.
+- [Commands](commands/corgi) — full CLI reference.
