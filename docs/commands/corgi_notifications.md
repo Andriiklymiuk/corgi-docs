@@ -1,27 +1,29 @@
-# corgi create
+# corgi notifications
 
-## corgi create
+## corgi notifications
 
-A command to create configurations for corgi
+Enable, disable, or test desktop crash notifications
 
 ### Synopsis
 
-A command to interactively prompt the user to create configurations for corgi and save to corgi-compose.yml.
+Toggle desktop notifications fired when a service crashes during corgi run.
+
+Examples:
+  corgi notifications              # show current setting
+  corgi notifications on           # enable
+  corgi notifications off          # disable
+  corgi notifications test         # fire a one-shot test (bypasses opt-in)
+
+State is persisted to ~/.corgi/config.yml.
 
 ```
-corgi create [flags]
+corgi notifications <on|off|test> [flags]
 ```
 
 ### Options
 
 ```
-      --driver string   db_service driver (e.g. postgres); required for kind=db_service
-  -h, --help            help for create
-      --image string    db_service docker image (image driver)
-      --kind string     Entry kind: db_service|service|required (required in non-interactive mode)
-      --name string     Entry name (required in non-interactive mode)
-      --path string     service path
-      --port int        port for db_service/service
+  -h, --help   help for notifications
 ```
 
 ### Options inherited from parent commands

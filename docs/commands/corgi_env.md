@@ -1,27 +1,31 @@
-# corgi create
+# corgi env
 
-## corgi create
+## corgi env
 
-A command to create configurations for corgi
+Print services' fully-resolved environment (read-only)
 
 ### Synopsis
 
-A command to interactively prompt the user to create configurations for corgi and save to corgi-compose.yml.
+Resolves and prints each service's environment exactly as corgi would
+generate it (db deps, service deps, ports, literal environment, copied env files,
+and cross-service references), with the source of each variable. Writes nothing.
+
+  corgi env                 # all services, masked, human view
+  corgi env api             # one service
+  eval $(corgi env api --export)
+  corgi env --json
 
 ```
-corgi create [flags]
+corgi env [service...] [flags]
 ```
 
 ### Options
 
 ```
-      --driver string   db_service driver (e.g. postgres); required for kind=db_service
-  -h, --help            help for create
-      --image string    db_service docker image (image driver)
-      --kind string     Entry kind: db_service|service|required (required in non-interactive mode)
-      --name string     Entry name (required in non-interactive mode)
-      --path string     service path
-      --port int        port for db_service/service
+      --export        Emit eval-able 'export KEY=VALUE' lines (real values)
+  -h, --help          help for env
+      --reveal        Do not mask secret values in the human view (human view only)
+      --tier string   Resolve env for this compose envTier (e.g. staging, prod)
 ```
 
 ### Options inherited from parent commands

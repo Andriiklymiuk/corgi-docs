@@ -1,27 +1,38 @@
-# corgi create
+# corgi validate
 
-## corgi create
+## corgi validate
 
-A command to create configurations for corgi
+Statically validate corgi-compose.yml
 
 ### Synopsis
 
-A command to interactively prompt the user to create configurations for corgi and save to corgi-compose.yml.
+Runs static semantic checks over corgi-compose.yml without starting
+containers, cloning repos, or touching the network.
+
+Errors (exit 1):
+  - depends_on_services / depends_on_db references a name that doesn't exist
+  - a cycle exists in the depends_on_services graph
+  - db_services.driver is not a known driver
+  - a service exposes a port but has no start command and no docker runner
+  - two services / db_services bind the same host port
+
+Warnings (non-fatal, fatal under --strict):
+  - a depended-on service has no healthCheck (TCP probe used)
+  - cloneFrom is set without a branch
+
+Flags:
+      --json     Emit {"ok":bool,"errors":[...],"warnings":[...]}
+      --strict   Treat warnings as failures
 
 ```
-corgi create [flags]
+corgi validate [flags]
 ```
 
 ### Options
 
 ```
-      --driver string   db_service driver (e.g. postgres); required for kind=db_service
-  -h, --help            help for create
-      --image string    db_service docker image (image driver)
-      --kind string     Entry kind: db_service|service|required (required in non-interactive mode)
-      --name string     Entry name (required in non-interactive mode)
-      --path string     service path
-      --port int        port for db_service/service
+  -h, --help     help for validate
+      --strict   Treat warnings as failures
 ```
 
 ### Options inherited from parent commands

@@ -1,27 +1,26 @@
-# corgi create
+# corgi stop
 
-## corgi create
+## corgi stop
 
-A command to create configurations for corgi
+Stop detached services and db_services started with corgi run --detach
 
 ### Synopsis
 
-A command to interactively prompt the user to create configurations for corgi and save to corgi-compose.yml.
+Reads corgi_services/.state.json, terminates each detached service's
+process group, runs afterStart hooks, and brings db_service containers down.
+
+Idempotent: with no run-state or nothing running it exits 0. Use --service to
+stop a single service and leave the rest running.
 
 ```
-corgi create [flags]
+corgi stop [flags]
 ```
 
 ### Options
 
 ```
-      --driver string   db_service driver (e.g. postgres); required for kind=db_service
-  -h, --help            help for create
-      --image string    db_service docker image (image driver)
-      --kind string     Entry kind: db_service|service|required (required in non-interactive mode)
-      --name string     Entry name (required in non-interactive mode)
-      --path string     service path
-      --port int        port for db_service/service
+  -h, --help             help for stop
+      --service string   Stop only this service (leave others running)
 ```
 
 ### Options inherited from parent commands

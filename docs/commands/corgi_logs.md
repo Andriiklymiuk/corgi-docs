@@ -1,27 +1,35 @@
-# corgi create
+# corgi logs
 
-## corgi create
+## corgi logs
 
-A command to create configurations for corgi
+Browse and follow persisted service logs
 
 ### Synopsis
 
-A command to interactively prompt the user to create configurations for corgi and save to corgi-compose.yml.
+Browse logs captured by corgi run --logs.
+
+Without flags: interactive picker — choose a service then a run, and
+the log is streamed to stdout (follows new writes like tail -f).
+
+Examples:
+  corgi logs                      # interactive picker
+  corgi logs --service api        # jump straight to run picker for "api"
+  corgi logs --all                # merge the newest run of every service into one stream
+  corgi logs --idle 0             # tail forever (until Ctrl-C)
+  corgi logs --prune              # delete all .logs/ directories
 
 ```
-corgi create [flags]
+corgi logs [flags]
 ```
 
 ### Options
 
 ```
-      --driver string   db_service driver (e.g. postgres); required for kind=db_service
-  -h, --help            help for create
-      --image string    db_service docker image (image driver)
-      --kind string     Entry kind: db_service|service|required (required in non-interactive mode)
-      --name string     Entry name (required in non-interactive mode)
-      --path string     service path
-      --port int        port for db_service/service
+      --all              Merge the newest run of every service into one timestamp-sorted stream
+  -h, --help             help for logs
+      --idle duration    Exit after this much dead-air on the file (set 0 to tail forever) (default 30s)
+      --prune            Delete all captured log files (corgi_services/.logs/)
+      --service string   Service name to show logs for (skips service picker)
 ```
 
 ### Options inherited from parent commands

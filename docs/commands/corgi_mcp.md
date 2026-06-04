@@ -1,27 +1,32 @@
-# corgi create
+# corgi mcp
 
-## corgi create
+## corgi mcp
 
-A command to create configurations for corgi
+Run corgi as an MCP server over stdio (for AI agent clients)
 
 ### Synopsis
 
-A command to interactively prompt the user to create configurations for corgi and save to corgi-compose.yml.
+Starts a Model Context Protocol server over stdio. AI agent clients spawn
+this as a subprocess and call corgi's commands as structured tools.
+
+Register it in .mcp.json (project) or ~/.claude.json:
+  { "mcpServers": { "corgi": { "command": "corgi", "args": ["mcp"] } } }
 
 ```
-corgi create [flags]
+corgi mcp [flags]
 ```
 
 ### Options
 
 ```
-      --driver string   db_service driver (e.g. postgres); required for kind=db_service
-  -h, --help            help for create
-      --image string    db_service docker image (image driver)
-      --kind string     Entry kind: db_service|service|required (required in non-interactive mode)
-      --name string     Entry name (required in non-interactive mode)
-      --path string     service path
-      --port int        port for db_service/service
+  -h, --help                     help for mcp
+      --http string              Serve MCP over Streamable HTTP at this address (e.g. :8765 or 127.0.0.1:8765) instead of stdio.
+      --insecure                 Disable bearer-token auth on the HTTP endpoint.
+      --token string             Bearer token for HTTP auth (auto-generated when --tunnel is set).
+      --tunnel                   Open a public tunnel to the --http addr (requires --http).
+      --tunnel-hostname string   Custom public hostname for the tunnel (${VAR} expanded).
+      --tunnel-name string       cloudflared named-tunnel name.
+      --tunnel-provider string   Tunnel provider (cloudflared|ngrok|localtunnel). (default "cloudflared")
 ```
 
 ### Options inherited from parent commands

@@ -1,27 +1,38 @@
-# corgi create
+# corgi tunnel
 
-## corgi create
+## corgi tunnel
 
-A command to create configurations for corgi
+Open public HTTPS tunnels for declared services
 
 ### Synopsis
 
-A command to interactively prompt the user to create configurations for corgi and save to corgi-compose.yml.
+Spawns one tunnel subprocess per selected service and prints public URLs.
+Default provider: cloudflared (free, no signup, Quick Tunnels).
+
+By default tunnels every services.<name> in corgi-compose.yml that has a
+`port:` field set and is not manualRun. Pass service names (csv) to
+narrow the set, or --port to tunnel a raw local port without compose lookup.
 
 ```
-corgi create [flags]
+corgi tunnel [service-names] [flags]
+```
+
+### Examples
+
+```
+corgi tunnel
+corgi tunnel api
+corgi tunnel api,api-2
+corgi tunnel --port 3030
+corgi tunnel --provider ngrok api
 ```
 
 ### Options
 
 ```
-      --driver string   db_service driver (e.g. postgres); required for kind=db_service
-  -h, --help            help for create
-      --image string    db_service docker image (image driver)
-      --kind string     Entry kind: db_service|service|required (required in non-interactive mode)
-      --name string     Entry name (required in non-interactive mode)
-      --path string     service path
-      --port int        port for db_service/service
+  -h, --help              help for tunnel
+      --port int          Raw local port to tunnel; skips corgi-compose.yml lookup
+      --provider string   Tunnel provider (cloudflared|localtunnel|ngrok) (default "cloudflared")
 ```
 
 ### Options inherited from parent commands

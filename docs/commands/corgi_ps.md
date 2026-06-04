@@ -1,27 +1,26 @@
-# corgi create
+# corgi ps
 
-## corgi create
+## corgi ps
 
-A command to create configurations for corgi
+Runtime snapshot of declared services and db_services
 
 ### Synopsis
 
-A command to interactively prompt the user to create configurations for corgi and save to corgi-compose.yml.
+Reports the topology declared in corgi-compose.yml — name, kind, port —
+and infers running/stopped from a port-listening probe where a port is known.
+
+Unlike a single 'corgi run', 'corgi ps' is a separate process and cannot see
+in-memory PIDs, so it reports declared topology plus a cheap port probe rather
+than live process health.
 
 ```
-corgi create [flags]
+corgi ps [flags]
 ```
 
 ### Options
 
 ```
-      --driver string   db_service driver (e.g. postgres); required for kind=db_service
-  -h, --help            help for create
-      --image string    db_service docker image (image driver)
-      --kind string     Entry kind: db_service|service|required (required in non-interactive mode)
-      --name string     Entry name (required in non-interactive mode)
-      --path string     service path
-      --port int        port for db_service/service
+  -h, --help   help for ps
 ```
 
 ### Options inherited from parent commands

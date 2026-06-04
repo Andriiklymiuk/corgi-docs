@@ -1,27 +1,29 @@
-# corgi create
+# corgi restart
 
-## corgi create
+## corgi restart
 
-A command to create configurations for corgi
+Stop then start detached services (corgi stop + corgi run --detach)
 
 ### Synopsis
 
-A command to interactively prompt the user to create configurations for corgi and save to corgi-compose.yml.
+Stops the currently detached stack (or a single --service) and brings it
+back up detached. Convenience for long-lived envs.
+
+Non-interactive safe. With --json the stdout is a single startup-summary
+JSON object (the same shape as corgi run --detach --json).
 
 ```
-corgi create [flags]
+corgi restart [flags]
 ```
 
 ### Options
 
 ```
-      --driver string   db_service driver (e.g. postgres); required for kind=db_service
-  -h, --help            help for create
-      --image string    db_service docker image (image driver)
-      --kind string     Entry kind: db_service|service|required (required in non-interactive mode)
-      --name string     Entry name (required in non-interactive mode)
-      --path string     service path
-      --port int        port for db_service/service
+      --detach           Start services detached (always on for restart) (default true)
+      --force            Ignore stale run-state and start anyway (default true)
+  -h, --help             help for restart
+      --host string      IP to use instead of localhost in service URL env vars. Pass an explicit IP or "auto"/"ip" to detect the first non-loopback IPv4.
+      --service string   Restart only this service (leave others running)
 ```
 
 ### Options inherited from parent commands
