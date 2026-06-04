@@ -52,6 +52,11 @@ function HomepageHeader() {
                 {"irm https://raw.githubusercontent.com/Andriiklymiuk/corgi/main/install.ps1 | iex"}
               </TerminalBlock>
             </TabItem>
+            <TabItem value="claude" label="Claude Code">
+              <TerminalBlock label="Claude Code — install the plugin" language="text">
+                {"/plugin marketplace add Andriiklymiuk/corgi\n/plugin install corgi@corgi\n\n# also install the corgi CLI (see the other tabs) — the plugin shells out to it"}
+              </TerminalBlock>
+            </TabItem>
           </Tabs>
         </div>
 
