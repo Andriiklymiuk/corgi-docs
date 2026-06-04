@@ -2,59 +2,188 @@
 sidebar_position: 3
 ---
 
-# Corgi compose items
+# corgi-compose.yml reference
 
 ![Links meme](/img/links_meme.jpg)
 
-Examples of these items usage can be found in
+Every field you can set in a `corgi-compose.yml`. Working examples live in the
 [examples repo](https://github.com/Andriiklymiuk/corgi_examples).
 
-You can add service in services part of yml file.
+:::tip Source of truth
+This page is a friendly reference. The authoritative, always-current schema is
+built into the binary:
 
-Corgi compose `service` can contain the following items (properties):
+```bash
+corgi docs --json-schema > corgi-compose.schema.json   # machine-readable JSON Schema
+corgi docs                                              # human-readable field list
+```
 
-| Item                | Example                                                                     | itemType             | Description                                                                                                                                                                                                         |
-| ------------------- | :-------------------------------------------------------------------------- | -------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| cloneFrom           | `git@github.com:Andriiklymiuk/corgi.git`                                    | `string`             | Git url to target repo. By default nothing is cloned.                                                                                                                                                               |
-| branch              | `some/feature/branch`                                                       | `string`             | Branch to use for git checkout. By default default branch for repo is used.                                                                                                                                         |
-| environment         | - YOUR_ENV=dev- YOUR__ANTOHER_ENV=abcdef                                    | `[]string`           | List of environment variables to copy and put into your env file.By default no environments are added.                                                                                                              |
-| envPath             | ./path/to/.env                                                              | `string`             | Path to .env file in target repo. By default .env file is used                                                                                                                                                      |
-| ignoreEnv           | false                                                                       | `string`             | Should service ignore env and don't change env file or not. By default is false (env is not ignored)                                                                                                                |
-| path                | ./path/to/target/repo                                                       | `string`             | Path to the actual project repo.By default the path to the folder in which corgi-compose.yml is used                                                                                                                |
-| copyEnvFromFilePath | ./path/to/.env-file-to-copy-from                                            | `string`             | The path to the .env, which content will be copied to service repo .env file                                                                                                                                        |
-| port                | 5432                                                                        | `number`             | Service port, that will be added to .env file.                                                                                                                                                                      |
-| portAlias                | PORT                                                                   | `string`             | Service port env name alias, that will be added to .env file.                                                                                                                                                                    |
-| manualRun           | true                                                                        | `boolean`            | Determines if the service will be run with run cmd.If it is true, that to run you add `--services manual_to_run_service` to run cmd.By default it is false.                                                         |
-| depends_on_db       | - name: db_name_from_db_services- envAlias: NAME_BEFORE_DB_IN_ENV           | `[]DependsOnDb`      | Adds db credentials (`DB_HOST`,etc) from db_services will be copied to .env.envAlias adds string before db credentials, like NAME_BEFORE_DB_IN_ENV_DB_HOST                                                          |
-| depends_on_services | - name: service_name- envAlias: NAME_TO_USE_IN_ENV- suffix: /special/suffix | `[]DependsOnService` | Adds service credentials to .env.suffix is added at the end of added valueNAME_TO_USE_IN_ENV=localhost:port/special/suffix will be added to .envIf you add just name, than it is SERVICE_NAME=localhost:port_in_env |
-| beforeStart         | - install dependencies- do some builds                                      | `[]string`           | List of commands to run consequently, before start commands are run.                                                                                                                                                |
-| start               | - run your service- run some other stuff                                    | `[]string`           | List of commands to run in parallel for the service needs.                                                                                                                                                          |
-| afterStart          | - do some needed cleanups                                                   | `[]string`           | List of commands to run consequently, when the cli is exited.                                                                                                                                                       |
+Add the schema to the top of your file for editor autocomplete + validation:
 
-Also, you can add service in db_services part. Corgi compose `db_service` can
-contain the following items (properties):
+```yaml
+# yaml-language-server: $schema=./corgi-compose.schema.json
+```
 
-| Item              | Example                                                                                                              | itemType     | Description                                                                                                                                                                                |
-| ----------------- | :------------------------------------------------------------------------------------------------------------------- | ------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| driver            | postgres                                                                                                             | `string`     | This is database driver for this service. By default postgres is used. |
-| host              | localhost                                                                                                            | `string`     | This is database host for this service, that will be used in `DB_HOST`. By default localhost is used                                                                                       |
-| version           | 1.0.1                                                                                                                | `string`     | This is database version for the service creation. By default latest is used                                                                                                               |
-| databaseName      | corgi-database                                                                                                       | `string`     | This is database name for this service, that will be used in `DB_NAME`                                                                                                                     |
-| user              | corgi                                                                                                                | `string`     | This is database user for this service, that will be used in `DB_USER`                                                                                                                     |
-| password          | corgiSecurePassword                                                                                                  | `string`     | This is database password for this service, that will be used in `DB_PASSWORD`                                                                                                             |
-| port              | 5432                                                                                                                 | `number`     | This is database port for this service, that will be used in `DB_PORT`                                                                                                                     |
-| seedFromFilePath  | ./path/to/dump.sql                                                                                                   | `string`     | Path to dump.sql file from which data is seeded.Use either seedFromFilePath or seedFromDb/seedFromDbEnvPath                                                                                |
-| seedFromDbEnvPath | ./path/to/db/info/.env                                                                                               | `string`     | Path to .env file with db credentials for db, from which data is seeded.Use either seedFromFilePath or seedFromDb/seedFromDbEnvPath                                                        |
-| seedFromDb        | - host: seed_db_host- databaseName: seed_db_name- user: seed_db_user- password: seed_db_password- port: seed_db_port | `SeedFromDb` | Db credentials to seed from.Use either seedFromFilePath or seedFromDb/seedFromDbEnvPath                                                                                                    |
+The [VS Code extension](https://marketplace.visualstudio.com/items?itemName=corgi.corgi)
+wires this up automatically.
+:::
 
-Also, you can add required items in required part. Corgi compose `required` can
-contain the following items (properties):
+## Top-level keys
 
-| Item     | Example                            | itemType   | Description                                                              |
-| -------- | :--------------------------------- | ---------- | ------------------------------------------------------------------------ |
-| why      | - pass butter- help with service X | `[]string` | The reasons to use/install this required command.                        |
-| install  | - install cmd 1- install cmd 2     | `[]string` | Installation steps to run, if cmd not found.                             |
-| optional | true                               | `boolean`  | Show or not the prompt, before this cmd installation.By default false.   |
-| checkCmd | this_command -v                    | `string`   | Command to run to check, if it is installed.By default cmd name is used. |
+```yaml
+name:         string   # project name
+description:  string   # free-text description
+useDocker:    bool     # run services via Docker instead of natively
+useAwsVpn:    bool     # initialize AWS VPN before run
+init:         [string] # shell commands run on `corgi init`
+beforeStart:  [string] # shell commands run before any service starts
+afterStart:   [string] # shell commands run on shutdown (Ctrl-C / SIGTERM)
+db_services:  { ... }  # databases & infra (see below)
+services:     { ... }  # your apps/servers (see below)
+required:     { ... }  # tools that must be installed (see below)
+envTiers:     { ... }  # optional named env bundles, picked with --tier
+```
+
+## `services.<name>`
+
+Your apps and servers. corgi clones them, generates a `.env`, and runs them.
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `path` | `string` | Path to the service repo (default: folder of `corgi-compose.yml`). |
+| `cloneFrom` | `string` | Git URL; cloned to `path` if missing. |
+| `branch` | `string` | Branch to check out on clone (default: repo default). |
+| `port` | `int` | Service port; written to `.env`. |
+| `portAlias` | `string` | Env var name for the port (default `PORT`). |
+| `manualRun` | `bool` | Skip on `corgi run` unless `--services <name>` is passed. |
+| `ignore_env` | `bool` | Don't generate/modify the service's `.env`. |
+| `envPath` | `string` | Where the `.env` lives in the repo (default `.env`). |
+| `copyEnvFromFilePath` | `string` | Template `.env` to copy in; falls back to repo `.env-example` / `.env.example`. |
+| `envPlaceholdersToCheck` | `[string]` | Tokens that mark unfilled values; corgi warns (doesn't fail) if any survive. |
+| `localhostNameInEnv` | `string` | Host written to `.env` (default `localhost`; becomes `host.docker.internal` under Docker). |
+| `environment` | `[string]` | Extra `KEY=value` env vars. Supports `${OWN_VAR}` and `${producer.VAR}` cross-service refs. |
+| `autoSourceEnv` | `bool` | Default `true`. `false` = don't auto-source `.env` into commands (avoid leaking secrets to subprocesses). |
+| `healthCheck` | `string` | HTTP path `corgi status` probes (e.g. `/health`); any non-5xx = healthy. |
+| `interactiveInput` | `bool` | Keep stdin open for `start` commands. |
+| `depends_on_db` | `[]` | DB credentials injected into `.env` (see below). |
+| `depends_on_services` | `[]` | Other services' URLs injected into `.env` (see below). |
+| `exports` | `[string]` | Vars exposed to dependents: `"NAME"` re-exports own env, `"NAME=value"` an inline literal. |
+| `runner` | `{ name }` | `docker` or a custom runner. |
+| `beforeStart` | `[string\|object]` | Run before `start`. Object form `{ run, cacheKey: [files] }` skips the step when those files' hash is unchanged (`--no-cache` forces it). |
+| `start` | `[string]` | Main, blocking command(s) — run in parallel across services. |
+| `afterStart` | `[string]` | Run on exit (also on single-service stop/restart). |
+| `restartPolicy` | `{ mode, maxRetries, backoffSeconds }` | Auto-heal a detached service that crashes at startup. `mode: on-failure \| never`. |
+| `openOnReady` | `bool\|object` | Open the URL when `healthCheck` passes (needs `corgi run --open`). |
+| `scripts` | `[]` | Named scripts run via `corgi script -n <name>` / `corgi test`. |
+| `tunnel` | `object` | Public HTTPS tunnel config (see below). |
+
+### `depends_on_db` / `depends_on_services`
+
+```yaml
+depends_on_db:
+  - name: my_postgres        # a db_services entry
+    envAlias: SEED           # prefix → SEED_DB_HOST, SEED_DB_USER, … (omit for plain DB_*)
+    forceUseEnv: false
+
+depends_on_services:
+  - name: api                # another service
+    envAlias: API_URL        # env var name for that service's URL
+    suffix: /api/v1          # appended to the URL
+    scheme: https            # default http
+```
+
+### `scripts`
+
+```yaml
+scripts:
+  - name: test               # corgi script -n test  (or corgi test)
+    manualRun: false
+    commands:
+      - go test ./...
+    copyEnvFromFilePath: ./ci.env
+```
+
+## `db_services.<name>`
+
+Databases and infra, run as Docker containers. See the examples repo and
+`corgi docs` for the full driver list.
+
+| Field | Type | Description |
+| --- | --- | --- |
+| `driver` | `string` | **Required.** `postgres`, `mysql`, `mongodb`, `redis`, `supabase`, `localstack`, `image`, … |
+| `host` | `string` | Default `localhost`; written to `DB_HOST`. |
+| `port` | `int` | Host port (`0` = no exposed port). |
+| `port2` | `int` | Secondary port (e.g. admin UI for neo4j/dgraph; mailpit web UI). |
+| `user` / `password` | `string` | Credentials (`DB_USER` / `DB_PASSWORD`). mssql password ≥ 8 chars. |
+| `databaseName` | `string` | DB/schema name (`DB_NAME`). |
+| `version` | `string` | Image tag (default `latest`). |
+| `manualRun` | `bool` | Skip unless `--dbServices <name>` is passed. |
+| `healthCheck` | `string` | HTTP path for `corgi status`. |
+| `seedFromFilePath` | `string` | Path to a dump (`.sql`, `.bak`, `.cql`, …) to seed from. |
+| `seedFromDbEnvPath` | `string` | Path to a `.env` holding seed-source DB creds. |
+| `seedFromDb` | `object` | Inline seed-source creds (`host/port/user/password/databaseName`). |
+
+**Driver-specific** (set under the same entry): `image` / `containerPort` /
+`environment` / `volumes` / `command` for the generic `image` driver;
+`additional.definitionPath` (rabbitmq); `services` / `queues` / `buckets`
+(localstack); `buckets` / `authUsers` / `jwtSecret` / `configTomlPath` /
+`dbPort` / `studioPort` / `inbucketPort` (supabase). See
+[`corgi docs`](commands/corgi_docs) for the per-driver list.
+
+## `required.<tool>`
+
+Tools that must be present before running. Checked by `corgi doctor`.
+
+```yaml
+required:
+  go:
+    why:
+      - To run the Go service locally
+    install:
+      - brew install go
+    checkCmd: go version   # default: <tool> -v
+    optional: false        # true → prompt before installing
+```
+
+## `services.<name>.tunnel`
+
+```yaml
+services:
+  api:
+    port: 3030
+    tunnel:
+      provider: cloudflared        # cloudflared (default, free) | ngrok
+      hostname: ${API_TUNNEL_HOST} # public URL (required when block present)
+      name: ${USER}-api-dev        # cloudflared only: pre-created named tunnel
+```
+
+`${VAR}` resolves: shell env → `<service-dir>/.env` → the `copyEnvFromFilePath`
+source env. Missing vars are a strict error at `corgi tunnel`.
+
+## `envTiers.<name>`
+
+Named run bundles selected with `corgi run --tier <name>`.
+
+```yaml
+envTiers:
+  staging:
+    dir: env/staging      # per-service lookup: env/staging/<service>.env
+    dbServices: none
+  prod:
+    dir: env/prod
+    dbServices: none
+    confirm: true         # prompt before running (bypass with --yes)
+```
+
+## `${VAR}` interpolation
+
+The whole file is interpolated **before** parsing, so `${VAR}` works in any string
+field (ports, passwords, paths, image refs, `environment` entries):
+
+- `${VAR}` — value of `VAR`.
+- `${VAR:-default}` — `VAR`, or `default` when unset/empty.
+- `$${X}` — literal `${X}` (not expanded).
+- Bare `$VAR` is left untouched (safe for shell snippets).
+- Dotted `${producer.VAR}` cross-service refs resolve later, from `exports`.
 
 [Main docs](/docs/intro)
