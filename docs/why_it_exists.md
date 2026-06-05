@@ -87,7 +87,10 @@ required:
 
 ## What happens on init
 
-1. It adds corgi compose files to gitignore
+1. It adds `corgi_services/*`, `.env*`, and any cloned service directories to your
+   project's `.gitignore` — so generated env files (including secrets) and corgi's
+   working state never get committed. Your `corgi-compose.yml` itself is **not**
+   ignored; that's the file you commit and share.
 2. Creates folder with db helpers files in in `corgi_services/db_services`
    folder. These files are created, so that you can run db_services manually, if
    you want.

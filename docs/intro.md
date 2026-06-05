@@ -196,6 +196,37 @@ You can read of what exactly happens on
 [run](why_it_exists#what-happens-on-init) or on
 [init](why_it_exists#what-happens-on-init) to better understand corgi logic.
 
+## Good to know
+
+**Prerequisites.** You need `git`, and Docker (only if you declare `db_services`).
+Everything else is whatever your project lists under `required:` — `corgi doctor`
+checks those, and `corgi doctor --fix` can install them by running the `install:`
+commands you put in the file.
+
+**Private repos just work.** corgi clones with plain `git`, so your existing SSH
+keys / credential helper are used as-is. No corgi-specific auth to set up.
+
+**Secrets stay local.** corgi writes each service's `.env` (db credentials, ports,
+sibling URLs) and gitignores `.env*` + `corgi_services/*` on init, so secrets never
+get committed. Put your own keys in a service's env or a tier file like
+`env/staging/web.env` — also gitignored.
+
+**When a run fails.** Port busy → `corgi doctor` names the holder, `corgi run
+--kill-port` frees it. Missing tool or Docker down → `corgi doctor --fix`. Clone
+failed → check your git access to that repo.
+
+**Scope.** corgi is a local inner-loop tool — for running your stack on your own
+machine, not staging/production or deploys. A `corgi-compose.yml` runs its
+`start`/`beforeStart` commands on your machine, so only run files you trust
+(especially `corgi run -t <url>`, which downloads and runs a remote one). `corgi
+mcp --http` is unauthenticated unless you expose it via `--tunnel` (which adds a
+bearer token), and `corgi tunnel` URLs are public — shut them down when done.
+
+**Low lock-in.** Your services stay ordinary git repos, your databases are standard
+Docker (corgi writes a plain `docker-compose.yml` per database under
+`corgi_services/db_services/`), and the wiring is just `.env` files. Stop using
+corgi and you keep all of it.
+
 ## Next steps
 
 - [Run a branch or worktree](branch_and_worktree) — run any service on a git branch
