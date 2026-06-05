@@ -6,15 +6,22 @@ sidebar_position: 2
 
 ![Purpose](/img/purpose.jpeg)
 
-As we expand services and go towards microservices architecture, we need to
-somehow test many databases, that are started and run locally.
+corgi exists to make running a multi-service project a non-event — something you
+do every day with one command instead of a morning of setup.
 
-Creation, seeding, recreation of database is pretty cumbersome task, which this
-cli wants to improve.
+A modern app is rarely one repo. It's a few services, a database or two, some
+infra (a queue, a cache, an S3-alike), env vars wired between all of it, and a
+list of tools everyone is supposed to have installed. Standing that up by hand —
+or keeping it running — is the same slog whether you just joined the team, picked
+up a new laptop, or started a fresh project.
 
-It uses docker compose under the hood to run specific db instance in
-containerized fashion, which helps to start service and stop it, fill with info,
-etc fast.
+`docker-compose` handles the _containers_. corgi handles everything around them:
+it git-clones the service repos, starts and **seeds** the databases in Docker
+(using docker-compose under the hood per db), auto-wires the env vars between
+services, checks the tools you need, and runs everything together. Your databases
+run in containers; your services run as normal processes. One file describes it
+all, and the same file is how you run the stack from then on — fully local, or
+with part of it pointed at staging.
 
 Here is example, that we will explain, based on
 [corgi-compose.yml postgres example](https://github.com/Andriiklymiuk/corgi_examples/blob/main/postgres/postgres-seeded-go-reactnative.corgi-compose.yml)
