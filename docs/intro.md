@@ -8,13 +8,44 @@ Let's discover **Corgi in less than 10 minutes**.
 
 ![Corgi logo](/img/corgi.png)
 
-Send someone your project yml file, init and run it in minutes.
+corgi is how you run your project locally — every day, with one command. You
+describe your stack once in a `corgi-compose.yml`, and `corgi run` brings the
+whole thing up: repos cloned, databases seeded, `.env` files written, every
+service started. It even starts Docker for you, so the infra just happens.
 
-No more long meetings, explanations of how to run new project with multiple
-microservices and configs. Just send corgi-compose.yml file to your team and
-corgi will do the rest.
+Onboarding comes free: hand a teammate the same file and they go from nothing to
+a running stack in minutes — no setup call, no "works on my machine". And because
+corgi never blocks on a prompt and speaks plain JSON, an AI agent or CI job can
+drive it just like you do.
 
-Auto git cloning, db seeding, concurrent running and much more.
+## What corgi does for you
+
+- **Your repos** — clones each service from its Git URL, pulls them all at once,
+  forks them, or runs one on a branch worktree without disturbing your checkout.
+- **Your databases** — 40+ drivers started in Docker and seeded from a dump or
+  remote DB; native shells with credentials filled in (`corgi db shell`);
+  LocalStack and Supabase stacks from the same file.
+- **Your services** — everything starts together, in the right order, with env
+  vars wired between them; `Ctrl-C` cleans up. Run it detached with `corgi run -d`.
+- **The fiddly bits** — `corgi doctor` preflight, live `corgi status -w` health,
+  public HTTPS tunnels, saved logs, and desktop crash notifications.
+- **Made for AI agents** — stable JSON and exit codes, an MCP server
+  (`corgi mcp`), and a Claude Code plugin that ships tickets as draft PRs
+  (`/corgi:stories`) and reviews them (`/corgi:review`).
+
+## In your day-to-day
+
+corgi isn't a one-time setup tool — it's how you run the project, in whatever
+shape the day calls for:
+
+- `corgi run` — the whole stack, one command (and it starts Docker for you).
+- `corgi db -u` — just the databases, when you run a service from your IDE.
+- `corgi run --tier staging --services web` — run only the frontend, pointed at
+  staging. Declare env tiers once, switch with a flag.
+- New project? Write a `corgi-compose.yml` first thing — `corgi create` or
+  `/corgi-new` — so "how do I run this?" has a permanent answer.
+- `/corgi:stories` — let Claude plan a feature across your services, back to
+  front, and open a draft PR for each.
 
 While in services you can create whatever you want, but in db services **for now it supports**:
 
@@ -122,7 +153,7 @@ This repo ships a [Claude Code](https://claude.com/claude-code) plugin so an AI 
 /plugin install corgi@corgi
 ```
 
-Then in any project that has a `corgi-compose.yml`, Claude will recognize it and use `corgi run` / `corgi doctor` / `corgi status` instead of inventing its own commands. A `/corgi-new` slash command scaffolds a fresh `corgi-compose.yml` from a short conversation.
+Then in any project that has a `corgi-compose.yml`, Claude will recognize it and use `corgi run` / `corgi doctor` / `corgi status` instead of inventing its own commands. Two workflows do the heavy lifting day to day: `/corgi:stories` hands Claude a batch of tracker issues (or a feature description) and it plans the work across your services, branches per service, and opens a **draft** PR for each; `/corgi:review` reviews those PRs/MRs against your repo's standards and posts inline suggestions. Plus `/corgi-new` to scaffold a fresh `corgi-compose.yml` and `/corgi-describe` for a service map. See [AI agents](ai_agents) for the full picture.
 
 ## Services creation
 
