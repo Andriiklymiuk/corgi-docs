@@ -52,7 +52,8 @@ While in services you can create whatever you want, but in db services **for now
 - [postgres](https://www.postgresql.org), [example](https://github.com/Andriiklymiuk/corgi_examples/tree/main/postgres)
 - [mongodb](https://www.mongodb.com), [example](https://github.com/Andriiklymiuk/corgi_examples/blob/main/mongodb/mongodb-go.corgi-compose.yml)
 - [rabbitmq](https://www.rabbitmq.com), [example](https://github.com/Andriiklymiuk/corgi_examples/blob/main/rabbitmq/rabbitmq-go-nestjs.corgi-compose.yml)
-- [aws sqs](https://docs.localstack.cloud/user-guide/aws/sqs/), [example](https://github.com/Andriiklymiuk/corgi_examples/blob/main/aws_sqs/aws_sqs_postgres_go_deno.corgi-compose.yml)
+- [sqs](https://docs.localstack.cloud/user-guide/aws/sqs/) — local AWS SQS, [example](https://github.com/Andriiklymiuk/corgi_examples/blob/main/aws_sqs/aws_sqs_postgres_go_deno.corgi-compose.yml)
+- [s3](https://docs.localstack.cloud/user-guide/aws/s3/) — local AWS S3 buckets
 - [redis](https://redis.io), [example](https://github.com/Andriiklymiuk/corgi_examples/blob/main/redis/redis-bun-expo.corgi-compose.yml)
 - [redis-server](https://redis.io)
 - [mysql](https://www.mysql.com)
@@ -61,7 +62,7 @@ While in services you can create whatever you want, but in db services **for now
 - [kafka](https://kafka.apache.org)
 - [mssql](https://www.microsoft.com/en-us/sql-server/sql-server-downloads)
 - [cassandra](https://cassandra.apache.org/_/index.html)
-- [cockroachDb](https://www.cockroachlabs.com)
+- [cockroach](https://www.cockroachlabs.com)
 - [clickhouse](https://clickhouse.com)
 - [scylla](https://www.scylladb.com)
 - [keydb](https://docs.keydb.dev)
