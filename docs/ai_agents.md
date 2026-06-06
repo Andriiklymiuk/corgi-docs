@@ -80,6 +80,19 @@ can author your `corgi-compose.yml`, run corgi, and debug failures accurately:
 /plugin install corgi@corgi
 ```
 
-It adds `/corgi-new` (scaffold a compose file), `/corgi-describe` (service map +
-Mermaid diagram), and `corgi:stories` (turn tracker issues or a feature description
-into spec'd, tested, reviewed draft PRs — each service in its own worktree).
+It adds:
+
+- `/corgi-run` — boot the stack (or a slice) detached and wait until healthy; tunnel,
+  logs, remote-backend, emulator-host, and per-service branch/worktree
+  (`--service-branch`/`--service-dir`) modes included.
+- `/corgi-debug` — diagnose a stack local-first (`ps`/`status`/`doctor`/`logs`), or
+  pull runtime/deployed logs for a bug from your stack's own provider (Coralogix,
+  CloudWatch/ECS, Datadog… — auto-detected from your README), on demand.
+- `/corgi-suggest` — ranked, evidence-backed product + engineering improvements, each
+  tied to a measurable outcome; specs the one you pick and can open a tracker story.
+- `corgi:stories` — turn tracker issues or a feature description into spec'd, tested,
+  reviewed draft PRs (each service in its own worktree).
+- `corgi:review` — review existing GitHub/GitLab PRs/MRs against your repo's standards
+  and the linked ticket.
+- `/corgi-new` (scaffold a compose file) and `/corgi-describe` (service map + Mermaid
+  diagram).
