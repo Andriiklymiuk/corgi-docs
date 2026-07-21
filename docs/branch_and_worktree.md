@@ -18,8 +18,10 @@ process all run there.
 | `--service-branch <svc>=<branch>` | Runs the service from a **reused git worktree** under `corgi_services/.worktrees/<svc>-<branch>` | No — main checkout untouched |
 | `--service-dir <svc>=<path>` | Runs the service from an existing directory you already have | No |
 | `--service-checkout <svc>=<branch>` | `git checkout <branch>` **in place** in the service's `path:` | Yes — refuses on a dirty tree, leaves the repo on that branch |
+| `--feature <branch>` | Runs **every** service whose repo has that branch from a worktree for it; the rest stay on their current checkout | No — main checkouts untouched |
 
-A service may appear in only one of the three at a time.
+A service may appear in only one of the first three at a time. `--feature` is
+fleet-wide and yields to any of them for a service they name.
 
 ## Examples
 
@@ -39,6 +41,29 @@ corgi run --service-checkout api=hotfix/x
 corgi test --service api --service-branch api=feature/login
 corgi exec api --service-branch api=feature/login --ensure-deps -- npm run migrate
 ```
+
+## One change, several repos: `--feature`
+
+A change that spans services usually lands as one branch name in each repo it
+touches. `--feature` takes that name once and applies it everywhere it exists:
+
+```bash
+corgi run --feature ABC-123-checkout-flow --detach --wait
+```
+
+For every service corgi asks its repo whether the branch exists — as a local head
+or on `origin`. Services that have it run from a worktree for it; services that
+don't stay on whatever they are checked out at. Nothing is checked out in place,
+and a missing branch is never an error — that asymmetry is the point, since a
+feature rarely touches the whole stack.
+
+A remote-only branch is fetched first, so a fresh (or `--depth 1`) clone works
+without any prior `git fetch`. Per-service flags win: give `--service-branch
+api=other` alongside `--feature ABC-123` and api uses `other` while everything
+else still follows the feature branch.
+
+This is what makes a full-stack CI job possible: check out the repos, pass the
+PR's branch name once, and every repo that carries the change joins the run.
 
 ## How `--service-branch` reuse works
 

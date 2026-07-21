@@ -1,31 +1,36 @@
-# corgi env
+# corgi mission-control
 
-## corgi env
+## corgi mission-control
 
-Print services' fully-resolved environment (read-only)
+One live pane: every service's run state + its branch/PR/CI
 
 ### Synopsis
 
-Resolves and prints each service's environment exactly as corgi would
-generate it (db deps, service deps, ports, literal environment, copied env files,
-and cross-service references), with the source of each variable. Writes nothing.
+Aggregates, in one refreshing read-only view, each declared service's
+run state (reusing 'corgi status' probes) and its per-service agent work —
+current branch, draft/open/merged PR, and CI status — read locally via git
+and gh/glab.
 
-  corgi env                 # all services, masked, human view
-  corgi env api             # one service
-  eval $(corgi env api --export)
-  corgi env --json
+  --watch          Repoll and reprint the frame until Ctrl+C.
+  --interval       Delay between refreshes (default 3s).
+  --service csv    Narrow to listed services.
+  --no-agent-work  Skip the git/gh probe (run-state only, faster).
+  --json           Emit one MissionSnapshot object on stdout (a snapshot,
+                   not a stream). Human chrome goes to stderr.
 
 ```
-corgi env [service...] [flags]
+corgi mission-control [flags]
 ```
 
 ### Options
 
 ```
-      --export        Emit eval-able 'export KEY=VALUE' lines (real values)
-  -h, --help          help for env
-      --reveal        Do not mask secret values in the human view (human view only)
-      --tier string   Resolve env for this compose envTier (e.g. staging, prod)
+  -h, --help                help for mission-control
+  -i, --interval duration   Delay between refreshes (default 3s)
+      --json                Emit one MissionSnapshot object on stdout
+      --no-agent-work       Skip the branch/PR/CI probe
+      --service strings     Limit to listed services (csv)
+  -w, --watch               Repoll continuously; Ctrl+C to stop
 ```
 
 ### Options inherited from parent commands
@@ -40,7 +45,6 @@ corgi env [service...] [flags]
       --fromTemplateName string   Create corgi service from template name and url
   -g, --global                    Use global path to one of the services
       --interactive               Force interactive prompts even when no TTY/agent detected
-      --json                      Emit machine-readable JSON output
       --privateToken string       Private token for private repositories to download files
   -o, --runOnce                   Run corgi once and exit
       --silent                    Hide all welcome messages
