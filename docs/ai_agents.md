@@ -88,6 +88,9 @@ It adds:
 - `/corgi-debug` — diagnose a stack local-first (`ps`/`status`/`doctor`/`logs`), or
   pull runtime/deployed logs for a bug from your stack's own provider (Coralogix,
   CloudWatch/ECS, Datadog… — auto-detected from your README), on demand.
+- `/corgi-ci` — generate (or fix) the CI pipeline that boots the whole stack and runs
+  cross-repo e2e on every PR — GitHub Actions or GitLab CI, with caching, health
+  gates, and log artifacts baked in. See [Run the stack in CI](./ci).
 - `/corgi-suggest` — ranked, evidence-backed product + engineering improvements, each
   tied to a measurable outcome; specs the one you pick and can open a tracker story.
 - `corgi:stories` — turn tracker issues or a feature description into spec'd, tested,
