@@ -27,7 +27,7 @@ plain parseable output, and never prompts.
 
 ```bash
 corgi init --depth 1 --feature "$BRANCH"              # clone every repo, shallow
-corgi run --feature "$BRANCH" --detach --wait --timeout 20m
+corgi run --feature "$BRANCH" --detach --wait --wait-timeout 20m
 corgi status --json                                   # gate on health
 corgi test --e2e                                      # the stack's e2e suite
 corgi logs --dump ./ci-logs                           # always, for artifacts
@@ -98,7 +98,7 @@ groups — so a GitLab or Buildkite job can build its cache config from it too.
 |------|-----|
 | `corgi init --depth 1` | Shallow clone per service repo. `--feature` fetches any branch it needs afterwards, so nothing is lost. |
 | `corgi run --detach --wait` | Boots in the background and blocks until every service is healthy — no `sleep 60` guesswork. |
-| `corgi run --timeout <d>` | Bounds the wait so a wedged service fails the job instead of hanging the runner. |
+| `corgi run --wait-timeout <d>` | Bounds the wait so a wedged service fails the job instead of hanging the runner. |
 | `corgi run --follow` | With `--detach --wait`: streams every service's log while waiting, so the job output shows what the boot was doing. |
 | `corgi status --json` | Machine-readable health for a gate step. |
 | `corgi test --e2e` | Runs the compose file's `e2e:` block against the live stack. |
