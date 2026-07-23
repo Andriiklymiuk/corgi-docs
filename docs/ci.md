@@ -48,7 +48,7 @@ stack, not to any one repo. Declare it once in `corgi-compose.yml`:
 e2e:
   workdir: ./e2e            # where the suite lives
   install: npm ci           # runs once before the suite
-  run: npx playwright test
+  run: maestro test flows/  # or: npx playwright test · cypress run · ./e2e.sh
 ```
 
 `corgi test --e2e` runs it against the already-running stack. It deliberately
