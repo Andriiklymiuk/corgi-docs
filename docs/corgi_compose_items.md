@@ -68,7 +68,8 @@ Your apps and servers. corgi clones them, generates a `.env`, and runs them.
 | `depends_on_db` | `[]` | DB credentials injected into `.env` (see below). |
 | `depends_on_services` | `[]` | Other services' URLs injected into `.env` (see below). |
 | `exports` | `[string]` | Vars exposed to dependents: `"NAME"` re-exports own env, `"NAME=value"` an inline literal. |
-| `runner` | `{ name }` | `docker` or a custom runner. |
+| `runner` | `string\|object` | `docker` (shorthand) or `{ name, dockerfile, context, target, args, volumes, containerPort, command, composeFile }`. See [Dockerfile services](./dockerfile_services.md). |
+| `waitForDatabases` | `bool` | Default `true`. `false` starts the service alongside the databases (it still gets their env). |
 | `beforeStart` | `[string\|object]` | Run before `start`. Object form `{ run, cacheKey: [files] }` skips the step when those files' hash is unchanged (`--no-cache` forces it). |
 | `start` | `[string]` | Main, blocking command(s) — run in parallel across services. |
 | `afterStart` | `[string]` | Run on exit (also on single-service stop/restart). |
