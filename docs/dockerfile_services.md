@@ -28,7 +28,9 @@ Pick the rung that fits each service; they mix freely in one file.
 1. **`cloneFrom` only, repo has `docker-compose.yml`** — corgi drives the
    repo's own compose file (`docker-compose.yml` / `.yaml`, `compose.yml` /
    `.yaml`), passing corgi's generated env via `--env-file` so `${VAR}`
-   references resolve.
+   references resolve. Zero-config only: any declared `runner:` build field
+   (or plain `runner: docker`) pins the Dockerfile instead — a repo's compose
+   file never silently overrides your config.
 2. **`cloneFrom` only, repo has `Dockerfile`** — corgi generates a compose
    wrapper (ports, env, restart policy) and runs it.
 3. **`runner:` fields tune the build** — custom dockerfile path, target,
@@ -101,6 +103,16 @@ For repo-compose services the repo's own `ports:` mapping applies; set
 `port:` in corgi-compose so readiness probes and `corgi ps` know where to
 look.
 
+:::caution Repo-compose env
+`--env-file` feeds `${VAR}` *interpolation* of the repo's compose file — it
+does not inject variables into the containers themselves. Container env comes
+from whatever `env_file:`/`environment:` the repo's compose declares. If the
+service needs corgi's generated values (DB credentials, cross-service URLs),
+reference them in the repo's compose (`environment: [DB_HOST=${DB_HOST}]`) or
+switch to the Dockerfile rung, where corgi's `.env` copy feeds the container
+directly.
+:::
+
 ## Env, readiness, logs, lifecycle
 
 - The service's corgi-generated `.env` (dependencies, db credentials,
@@ -114,6 +126,20 @@ look.
   containers down (volumes survive; `corgi clean` removes them).
 - Builds run concurrently — one goroutine per service, same
   dependency/database gating as native services.
+
+## Migrating from the old `runner: docker`
+
+Earlier corgi versions generated a fixed wrapper: build context three levels
+up (the compose root), `Dockerfile` at the service root, and an automatic
+whole-workspace `/app` volume mount. Now the context defaults to the service
+dir, no volumes are mounted unless you declare `runner.volumes`, and `up`
+rebuilds on context changes (`--build`). If your Dockerfile relied on the old
+root context, set `runner.context` explicitly; if you relied on the implicit
+mounts, declare them under `runner.volumes`.
+
+Container names are the docker-safe service name — two workspaces using the
+same service name share one docker namespace, so give services distinct names
+(same rule as corgi's database containers).
 
 ## Troubleshooting
 
