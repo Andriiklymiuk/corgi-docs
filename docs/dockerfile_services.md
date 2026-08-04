@@ -82,6 +82,34 @@ services:
 
 Scalar shorthand: `runner: docker`.
 
+Two more runner tricks:
+
+```yaml
+services:
+  pdf:
+    port: 3005
+    runner:
+      image: gotenberg/gotenberg:8 # registry image, no repo/build at all
+      containerPort: 3000
+
+  api:
+    cloneFrom: git@example.com:org/api.git
+    port: 3084
+    runner:
+      name: docker
+      watch: true # rebuild + restart the container on file changes
+```
+
+`image` needs no `name: docker` (implied) and no repo — perfect for a backing
+service your team never edits. `watch` uses `docker compose up --watch`;
+foreground runs only (detached runs skip it and say so).
+
+## Pre-building images
+
+`corgi build` builds every docker-capable service's image in parallel without
+starting anything — warm the cache before a demo, or in CI before
+`corgi run --wait`. Respects `--services`; exit 1 if any build fails.
+
 To use a specific compose file the repo ships instead of generating one:
 
 ```yaml
@@ -103,15 +131,12 @@ For repo-compose services the repo's own `ports:` mapping applies; set
 `port:` in corgi-compose so readiness probes and `corgi ps` know where to
 look.
 
-:::caution Repo-compose env
-`--env-file` feeds `${VAR}` *interpolation* of the repo's compose file — it
-does not inject variables into the containers themselves. Container env comes
-from whatever `env_file:`/`environment:` the repo's compose declares. If the
-service needs corgi's generated values (DB credentials, cross-service URLs),
-reference them in the repo's compose (`environment: [DB_HOST=${DB_HOST}]`) or
-switch to the Dockerfile rung, where corgi's `.env` copy feeds the container
-directly.
-:::
+Corgi's generated env (DB credentials, cross-service URLs — with
+`localhost` rewritten to `host.docker.internal`) reaches repo-compose
+containers two ways: `${VAR}` interpolation inside the compose file, and an
+auto-generated override (`corgi.env.override.yml`) that adds corgi's env
+file to every service in it. Values the repo's compose sets explicitly win
+over the injected ones.
 
 ## Env, readiness, logs, lifecycle
 
