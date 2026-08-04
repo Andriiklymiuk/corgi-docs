@@ -35,6 +35,7 @@ name:         string   # project name
 description:  string   # free-text description
 useDocker:    bool     # run services via Docker instead of natively
 useAwsVpn:    bool     # initialize AWS VPN before run
+scopeContainers: bool  # prefix containers with the workspace name (collision-free across workspaces)
 init:         [string] # shell commands run on `corgi init`
 beforeStart:  [string] # shell commands run before any service starts
 afterStart:   [string] # shell commands run on shutdown (Ctrl-C / SIGTERM)

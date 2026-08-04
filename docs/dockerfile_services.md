@@ -163,8 +163,16 @@ root context, set `runner.context` explicitly; if you relied on the implicit
 mounts, declare them under `runner.volumes`.
 
 Container names are the docker-safe service name — two workspaces using the
-same service name share one docker namespace, so give services distinct names
-(same rule as corgi's database containers).
+same service name share one docker namespace. Opt out of collisions with:
+
+```yaml
+name: my-stack
+scopeContainers: true # containers become my-stack-api, postgres-my-stack-db, …
+```
+
+Applies to services and databases alike. Off by default — existing names stay
+exactly as they are. Turning it on with old containers still running gets a
+warning at boot listing what to remove.
 
 ## Troubleshooting
 
