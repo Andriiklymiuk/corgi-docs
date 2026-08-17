@@ -23,6 +23,19 @@ whole stack from the branches under review is the only check that sees it.
 `CODEBUILD_BUILD_ID`. When any is set corgi drops spinners and banners, prints
 plain parseable output, and never prompts.
 
+## Let corgi write it
+
+```bash
+corgi ci init                      # forge taken from the git remote
+corgi ci init --provider gitlab    # or say so
+```
+
+GitHub gets `.github/workflows/stack-e2e.yml`. GitLab gets `.gitlab-ci.yml`
+plus `.gitlab/corgi-cache.yml` generated from this compose. Neither overwrites
+an existing file without `--force`, and both print what the workspace still has
+to supply — runner tags, the clone token, the env files, and an `e2e:` block if
+the compose has none.
+
 ## A full-stack job
 
 ```bash
@@ -34,6 +47,11 @@ corgi test --e2e                                      # the stack's e2e suite
 corgi logs --dump ./ci-logs                           # always, for artifacts
 ```
 
+A failed `beforeStart` fails the run: `--wait` returns it immediately instead of
+waiting out the readiness timeout, and a run without `--wait` exits non-zero.
+Older pipelines grep the logs for `aborting beforeStart` — that step can be
+deleted.
+
 `--feature` is what makes this work across repos: pass the branch name once and
 every repo that has it joins the run, while the rest stay on their default
 checkout. See [Run a branch or worktree](./branch_and_worktree).
@@ -43,6 +61,9 @@ checkout. See [Run a branch or worktree](./branch_and_worktree).
 The tool, Docker and port checks run everywhere. On a runner it adds two more,
 and stays silent about both on a laptop where they are normal mid-setup states:
 
+- **disk headroom** — free space against a rough estimate from the database and
+  service counts, because running out mid-boot surfaces as a random service
+  failing to build, never as a disk message
 - **the job is running inside a container** — the database containers would
   publish to a localhost the services cannot reach, which surfaces as "the api
   can't reach postgres" rather than as a runner problem
@@ -96,6 +117,9 @@ same two commands work on your laptop (`corgi run -d --wait`, then
 | `cache-paths` | Newline-separated directories worth caching — pass straight to `actions/cache`'s `path`. |
 | `cache-key` | Key that changes whenever any `cacheKey` file changes — pass straight to its `key`. |
 | `cache-groups` | The same plan split per ecosystem, as JSON (`{id, key, paths, pathsText}` per group). One `actions/cache` step per group keeps a change to one language's lockfile from evicting every other language's packages. |
+| `cache-1-key` … `cache-4-key` | The same groups as four fixed slots, empty when unused. A workflow expression cannot loop, so write four plain cache steps reading these instead of indexing `fromJSON(cache-groups)`. |
+| `cache-1-paths` … `cache-4-paths` | Newline-separated paths for the matching slot. |
+| `cache-overflow` | Ecosystems that did not fit the four slots. The action already warns when it is non-zero, so no workflow step is needed. |
 
 The action downloads the release archive for the runner's platform and verifies
 it against the published `checksums.txt` before installing, so a tampered or
@@ -229,8 +253,9 @@ required:
 - **Disk.** A full stack pulls several GB of images and installs dependencies for
   every service. Hosted runners are often provisioned tighter than that; free
   space up front rather than debugging a confusing mid-run failure.
-- **Caching.** Give each `beforeStart` install step a `cacheKey` pointing at its
-  lockfile, then let `corgi cache paths` (or the action's outputs) tell the cache
+- **Caching.** `corgi cache paths` tells you when nothing opts in, naming each
+  install step and the lockfile to key it on. Give each `beforeStart` install
+  step a `cacheKey` pointing at its lockfile, then let `corgi cache paths` (or the action's outputs) tell the cache
   what to restore. Both halves of the plan are required: the dependency
   directories are the actual saving, and `corgi_services/.cache/` holds the
   markers that let corgi skip an unchanged step — markers without the
