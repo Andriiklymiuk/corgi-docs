@@ -27,6 +27,7 @@ plain parseable output, and never prompts.
 
 ```bash
 corgi init --depth 1 --feature "$BRANCH"              # clone every repo, shallow
+corgi doctor                                          # fail in seconds, not 20 minutes in
 corgi run --feature "$BRANCH" --detach --wait --wait-timeout 20m
 corgi status --json                                   # gate on health
 corgi test --e2e                                      # the stack's e2e suite
@@ -36,6 +37,19 @@ corgi logs --dump ./ci-logs                           # always, for artifacts
 `--feature` is what makes this work across repos: pass the branch name once and
 every repo that has it joins the run, while the rest stay on their default
 checkout. See [Run a branch or worktree](./branch_and_worktree).
+
+### What `corgi doctor` adds in CI
+
+The tool, Docker and port checks run everywhere. On a runner it adds two more,
+and stays silent about both on a laptop where they are normal mid-setup states:
+
+- **the job is running inside a container** — the database containers would
+  publish to a localhost the services cannot reach, which surfaces as "the api
+  can't reach postgres" rather than as a runner problem
+- **a `copyEnvFromFilePath` that is not on the runner** — those files are almost
+  always gitignored, and corgi otherwise falls back to a committed
+  `.env-example` whose placeholder values start the service and then fail at the
+  first request, thousands of lines from the cause
 
 ## The stack's e2e suite
 
