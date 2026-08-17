@@ -88,9 +88,102 @@ it against the published `checksums.txt` before installing, so a tampered or
 truncated download fails instead of executing. `@v1` moves with each release;
 pin an exact tag (`@v1.20.13`) to bump deliberately.
 
-Not on GitHub? `corgi cache paths` prints the same plan anywhere —
+Not on GitHub or GitLab? `corgi cache paths` prints the same plan anywhere —
 newline-separated paths, `--key` for the key, `--json` for the per-ecosystem
-groups — so a GitLab or Buildkite job can build its cache config from it too.
+groups — so a Buildkite or Jenkins job can build its cache config from it too.
+
+## The GitLab include
+
+The counterpart ships in the corgi repo and is pulled in over HTTPS. In the
+repo that holds `corgi-compose.yml`:
+
+```yaml
+include:
+  - remote: https://raw.githubusercontent.com/Andriiklymiuk/corgi/main/gitlab/corgi.yml
+    inputs:
+      corgi_version: "1.20.17"
+      runner_tags: [my-vm-runner]
+  - local: .gitlab/corgi-cache.yml
+
+stack-e2e:
+  extends: [.corgi-stack-e2e, .corgi-cache]
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+```
+
+Pin the remote to a tag once it works — an include is fetched fresh on every
+pipeline, so `main` would change under you.
+
+| input | |
+|---|---|
+| `corgi_version` | Version to install, without the leading `v`. Empty takes the latest release. |
+| `working_directory` | Where `corgi-compose.yml` lives, relative to the project root. |
+| `branch` | Branch every service repo is checked for. Defaults to `$CI_COMMIT_REF_NAME`. |
+| `runner_tags` | Tags selecting the runner. Must resolve to a shell or VM-backed runner. |
+| `stage` | Stage the jobs belong to. Defaults to `test`. |
+| `wait_timeout` | How long `corgi run` waits for health. Defaults to `20m`. |
+| `job_timeout` | Ceiling for the whole job, which also bounds `beforeStart`. Defaults to `45m`. |
+| `artifacts_dir` | Where e2e artifacts and dumped logs are collected. Defaults to `ci-artifacts`. |
+| `allow_container` | Skip the docker-executor guard. Only when the runner really shares the namespace. |
+
+It defines two job templates. `.corgi-setup` installs corgi from a
+checksum-verified release archive and **fails fast when the job is running
+inside a container** — the number one reason a GitLab port dies in a way that
+looks like "the api cannot reach postgres". `.corgi-stack-e2e` is the whole
+cross-repo run: clone at the branch, boot, catch a silent `beforeStart`
+failure, gate on `corgi status --json`, run `corgi test --e2e`, and dump logs
+and artifacts in an always-executed `after_script`.
+
+### Each service repo calls it
+
+Same shape as GitHub's reusable workflow — one file per participating repo:
+
+```yaml
+include:
+  - project: your-group/your-workspace-repo
+    ref: main
+    file: stack-e2e.yml
+    inputs:
+      branch: $CI_COMMIT_REF_NAME
+
+stack-e2e:
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+```
+
+`CI_JOB_TOKEN` clones the sibling projects once each one grants the calling
+project under **Settings → CI/CD → Job token permissions**; a group access
+token works too.
+
+### The cache is generated, not read at runtime
+
+An Actions expression can read the plan mid-run. GitLab's cache config is
+static YAML, so corgi renders it instead:
+
+```bash
+corgi cache paths --gitlab --out .gitlab/corgi-cache.yml    # once, and after any service change
+corgi cache paths --gitlab --check .gitlab/corgi-cache.yml  # in CI: fails when it drifts
+```
+
+Commit the result and keep `--check` in the pipeline — a generated file that
+nothing verifies is a list that silently stops matching the compose file.
+
+Two GitLab rules shape the output. Caches "can't link to files outside" the
+project directory, so `~/.npm` and friends are redirected into
+`$CI_PROJECT_DIR/.corgi-cache/` along with the environment variable that puts
+them there. And a job holds at most four caches, so past three ecosystems the
+tail is merged into one entry.
+
+Keys are branch-scoped with a fallback to the default branch rather than hashed
+from lockfiles: corgi clones the service repos *during* the job, so no lockfile
+exists yet when GitLab would compute a `key:files`. A warm-but-stale restore is
+safe anyway — corgi re-hashes every `cacheKey` and checks the dependency
+directory is really present before it skips an install, so the worst case is a
+reinstall rather than a service started against packages that are not there.
+
+If the pipeline clones the workspace repo into a subdirectory, generate with
+`--path-prefix <dir>`: GitLab resolves every cache path against the project
+root and nothing else.
 
 ## Flags that matter in CI
 
