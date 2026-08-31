@@ -34,6 +34,7 @@ corgi version --json
       --fromTemplateName string   Create corgi service from template name and url
   -g, --global                    Use global path to one of the services
       --interactive               Force interactive prompts even when no TTY/agent detected
+      --isolate string            Run this workspace under a named lease: own port block, own database names, own containers
       --json                      Emit machine-readable JSON output
       --privateToken string       Private token for private repositories to download files
   -o, --runOnce                   Run corgi once and exit

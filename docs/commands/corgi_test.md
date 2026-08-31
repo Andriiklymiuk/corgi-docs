@@ -20,6 +20,7 @@ Examples:
   corgi test --service api
   corgi test --profile backend --json
   corgi test --ensure-deps
+  corgi test --changed --base main   # only repos that differ from main
 
 ```
 corgi test [flags]
@@ -30,6 +31,8 @@ corgi test [flags]
 ```
       --artifacts-dir artifacts:       Directory to copy the e2e block's artifacts: paths into after the run,
                                        pass or fail. Defaults to corgi_artifacts/e2e next to the compose file.
+      --base string                    Branch to compare against for --changed. Falls back to origin/<base>. (default "main")
+      --changed                        Only test services whose repo differs from --base (uncommitted work counts as changed).
       --e2e                            Run the stack's e2e: block against the already-running stack, instead of
                                        each service's own test script. A suite that drives several services at once
                                        belongs to the stack rather than to any one of them.
@@ -64,6 +67,7 @@ corgi test [flags]
       --fromTemplateName string   Create corgi service from template name and url
   -g, --global                    Use global path to one of the services
       --interactive               Force interactive prompts even when no TTY/agent detected
+      --isolate string            Run this workspace under a named lease: own port block, own database names, own containers
       --json                      Emit machine-readable JSON output
       --privateToken string       Private token for private repositories to download files
   -o, --runOnce                   Run corgi once and exit
