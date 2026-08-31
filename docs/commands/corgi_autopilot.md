@@ -30,6 +30,7 @@ in corgi_services/.autopilot.json and coordinates iterations across /loop or
       --fromTemplateName string   Create corgi service from template name and url
   -g, --global                    Use global path to one of the services
       --interactive               Force interactive prompts even when no TTY/agent detected
+      --isolate string            Run this workspace under a named lease: own port block, own database names, own containers
       --privateToken string       Private token for private repositories to download files
   -o, --runOnce                   Run corgi once and exit
       --silent                    Hide all welcome messages
