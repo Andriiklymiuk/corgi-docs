@@ -33,8 +33,8 @@ wires this up automatically.
 ```yaml
 name:         string   # project name
 description:  string   # free-text description
-useDocker:    bool     # run services via Docker instead of natively
-useAwsVpn:    bool     # initialize AWS VPN before run
+useDocker:    bool     # auto-start Docker before run (skip once: corgi run --omit useDocker)
+useAwsVpn:    bool     # initialize AWS VPN before run (skip once: corgi run --omit useAwsVpn)
 scopeContainers: bool  # prefix containers with the workspace name (collision-free across workspaces)
 init:         [string] # shell commands run on `corgi init`
 beforeStart:  [string] # shell commands run before any service starts
