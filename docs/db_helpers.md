@@ -41,7 +41,7 @@ databases, for example:
 
 You can run each service individually, e.g. `corgi db`. It will show you
 interactive menu to choose one of the service databases, that are located in
-`corgi_services/db_services` folder.
+`.corgi/corgi_services/db_services` folder.
 
 ```bash
 Use the arrow keys to navigate: ↓ ↑ → ← 
@@ -124,7 +124,7 @@ If you provided seedSource in `corgi-compose.yml`, than you can do:
 If no seedSource provided:
 
 0. [Create database dump](./database_dump.md), name it `dump.sql` and place it
-   in targeted service, e.g. place it in `corgi_services/db_services/backoffice`
+   in targeted service, e.g. place it in `.corgi/corgi_services/db_services/backoffice`
    folder
 1. Run `corgi db` from root folder
 2. Choose service

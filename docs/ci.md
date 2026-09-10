@@ -257,7 +257,7 @@ required:
   install step and the lockfile to key it on. Give each `beforeStart` install
   step a `cacheKey` pointing at its lockfile, then let `corgi cache paths` (or the action's outputs) tell the cache
   what to restore. Both halves of the plan are required: the dependency
-  directories are the actual saving, and `corgi_services/.cache/` holds the
+  directories are the actual saving, and `.corgi/corgi_services/.cache/` holds the
   markers that let corgi skip an unchanged step — markers without the
   dependency directory would skip an install that is genuinely needed. Worktrees
   created by `--feature` get their own marker scope, so they never inherit the

@@ -87,11 +87,11 @@ required:
 
 ## What happens on init
 
-1. It adds `corgi_services/*`, `.env*`, and any cloned service directories to your
+1. It adds `.corgi/corgi_services/*`, `.env*`, and any cloned service directories to your
    project's `.gitignore` — so generated env files (including secrets) and corgi's
    working state never get committed. Your `corgi-compose.yml` itself is **not**
    ignored; that's the file you commit and share.
-2. Creates folder with db helpers files in in `corgi_services/db_services`
+2. Creates folder with db helpers files in in `.corgi/corgi_services/db_services`
    folder. These files are created, so that you can run db_services manually, if
    you want.
 3. If the path provided doesn't exist and cloneFrom is provided, than it will
@@ -104,7 +104,7 @@ required:
 
 If you run `corgi run` it will:
 
-1. Create folder with db helpers files in in `corgi_services/db_services`
+1. Create folder with db helpers files in in `.corgi/corgi_services/db_services`
    folder. These files are created, so that you can run db_services manually, if
    you want.
 2. If there are any db_services, than it will auto launch docker (if not
@@ -139,7 +139,7 @@ A few commands round out the day-to-day loop:
 - **`corgi status`** (`-w` watch, `-r` ready) — probes each service's port (and
   `healthCheck:` path) and reports healthy / unhealthy.
 - **`corgi run --detach`** — start everything in the background, write
-  `corgi_services/.state.json`, and return immediately; manage it later with
+  `.corgi/corgi_services/.state.json`, and return immediately; manage it later with
   `corgi ps` / `corgi stop`.
 - **`corgi run --service-branch api=feature/x`** — run a single service on a git
   branch in an isolated worktree, without touching your checkout. See

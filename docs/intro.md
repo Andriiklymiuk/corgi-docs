@@ -207,7 +207,7 @@ commands you put in the file.
 keys / credential helper are used as-is. No corgi-specific auth to set up.
 
 **Secrets stay local.** corgi writes each service's `.env` (db credentials, ports,
-sibling URLs) and gitignores `.env*` + `corgi_services/*` on init, so secrets never
+sibling URLs) and gitignores `.env*` + `.corgi/corgi_services/*` on init, so secrets never
 get committed. Put your own keys in a service's env or a tier file like
 `env/staging/web.env` — also gitignored.
 
@@ -224,7 +224,7 @@ bearer token), and `corgi tunnel` URLs are public — shut them down when done.
 
 **Low lock-in.** Your services stay ordinary git repos, your databases are standard
 Docker (corgi writes a plain `docker-compose.yml` per database under
-`corgi_services/db_services/`), and the wiring is just `.env` files. Stop using
+`.corgi/corgi_services/db_services/`), and the wiring is just `.env` files. Stop using
 corgi and you keep all of it.
 
 ## Next steps

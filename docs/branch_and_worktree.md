@@ -15,7 +15,7 @@ process all run there.
 
 | Flag | What it does | Destructive? |
 |------|--------------|--------------|
-| `--service-branch <svc>=<branch>` | Runs the service from a **reused git worktree** under `corgi_services/.worktrees/<svc>-<branch>` | No — main checkout untouched |
+| `--service-branch <svc>=<branch>` | Runs the service from a **reused git worktree** under `.corgi/corgi_services/.worktrees/<svc>-<branch>` | No — main checkout untouched |
 | `--service-dir <svc>=<path>` | Runs the service from an existing directory you already have | No |
 | `--service-checkout <svc>=<branch>` | `git checkout <branch>` **in place** in the service's `path:` | Yes — refuses on a dirty tree, leaves the repo on that branch |
 | `--feature <branch>` | Runs **every** service whose repo has that branch from a worktree for it; the rest stay on their current checkout | No — main checkouts untouched |
@@ -79,7 +79,7 @@ exist (local or remote). Your service's main checkout is never touched.
 
 ## Managing worktrees
 
-Worktrees accumulate one per branch under `corgi_services/.worktrees/`:
+Worktrees accumulate one per branch under `.corgi/corgi_services/.worktrees/`:
 
 ```bash
 corgi worktree list     # print every corgi-created worktree
