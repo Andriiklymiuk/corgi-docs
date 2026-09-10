@@ -29,7 +29,7 @@ pg_dump "postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:$DB_PORT/$DB_NAME" \
 ```
 
 Place the resulting `dump.sql` next to the service in
-`corgi_services/db_services/<service>/`, then seed it with `corgi db` → choose
+`.corgi/corgi_services/db_services/<service>/`, then seed it with `corgi db` → choose
 service → **seed**. (`pg_dump` ships with the `postgresql` client tools.)
 
 ## With pgAdmin 4 (GUI)

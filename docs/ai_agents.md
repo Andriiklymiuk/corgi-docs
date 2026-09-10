@@ -36,7 +36,7 @@ The `code` is a stable string to branch on. Commands with pure-JSON stdout inclu
 ## Detached lifecycle
 
 `corgi run --detach` (`-d`) starts every service as a detached process group that
-survives corgi exiting, writes `corgi_services/.state.json`, and returns
+survives corgi exiting, writes `.corgi/corgi_services/.state.json`, and returns
 immediately. Inspect and control it without a daemon:
 
 ```bash
