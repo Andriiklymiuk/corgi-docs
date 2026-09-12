@@ -128,6 +128,14 @@ const config = {
                 label: 'Vscode extension',
                 href: 'https://marketplace.visualstudio.com/items?itemName=Corgi.corgi',
               },
+              {
+                label: 'Phone app support',
+                to: '/support',
+              },
+              {
+                label: 'Privacy policy',
+                to: '/privacy',
+              },
             ],
           },
         ],
