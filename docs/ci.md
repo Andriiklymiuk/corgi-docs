@@ -94,32 +94,50 @@ same two commands work on your laptop (`corgi run -d --wait`, then
 
 ## The GitHub Action
 
-`Andriiklymiuk/corgi@v1` installs corgi and tells `actions/cache` what to keep:
+`Andriiklymiuk/corgi@v1` installs corgi. `Andriiklymiuk/corgi/cache@v1`, placed
+after `corgi init`, tells `actions/cache` what to keep:
 
 ```yaml
 - uses: Andriiklymiuk/corgi@v1
-  id: corgi
+
+- run: corgi init --depth 1 --feature "$BRANCH"
+
+- uses: Andriiklymiuk/corgi/cache@v1
+  id: cache
 
 - uses: actions/cache@v4
   with:
-    path: ${{ steps.corgi.outputs.cache-paths }}
-    key: ${{ steps.corgi.outputs.cache-key }}
+    path: ${{ steps.cache.outputs.cache-paths }}
+    key: ${{ steps.cache.outputs.cache-key }}
 ```
+
+The order matters. The cache keys are hashed from every service's `cacheKey`
+lockfile, and those files do not exist until `corgi init` clones the service
+repos. Computed before that, the key is hashed from nothing, comes out the same
+on every run, and `actions/cache` never saves a new entry — the dependencies
+freeze at whatever the first run installed. The install action still publishes
+the same cache outputs for older workflows, but warns when it computed them
+from missing files; the cache action fails the step instead
+(`corgi cache paths --json --strict`), so the mistake cannot ship quietly.
 
 | input | |
 |---|---|
-| `version` | corgi version to install, without the leading `v`. Omit for the latest release; pin to keep a workflow reproducible. |
+| `version` | (install action) corgi version to install, without the leading `v`. Omit for the latest release; pin to keep a workflow reproducible. |
 | `working-directory` | Where `corgi-compose.yml` lives. Defaults to the repo root; the cache outputs are derived from it. |
+
+Both actions publish the cache outputs below; the install action also
+publishes `version`.
 
 | output | |
 |---|---|
-| `version` | The corgi version that was installed. |
+| `version` | (install action) The corgi version that was installed. |
 | `cache-paths` | Newline-separated directories worth caching — pass straight to `actions/cache`'s `path`. |
 | `cache-key` | Key that changes whenever any `cacheKey` file changes — pass straight to its `key`. |
 | `cache-groups` | The same plan split per ecosystem, as JSON (`{id, key, paths, pathsText}` per group). One `actions/cache` step per group keeps a change to one language's lockfile from evicting every other language's packages. |
 | `cache-1-key` … `cache-4-key` | The same groups as four fixed slots, empty when unused. A workflow expression cannot loop, so write four plain cache steps reading these instead of indexing `fromJSON(cache-groups)`. |
 | `cache-1-paths` … `cache-4-paths` | Newline-separated paths for the matching slot. |
 | `cache-overflow` | Ecosystems that did not fit the four slots. The action already warns when it is non-zero, so no workflow step is needed. |
+| `cache-complete` | `true` when every `cacheKey` file existed when the keys were hashed. The install action reports `false` (with a warning) when it ran before `corgi init`; the cache action fails the step instead. |
 
 The action downloads the release archive for the runner's platform and verifies
 it against the published `checksums.txt` before installing, so a tampered or
@@ -129,6 +147,10 @@ pin an exact tag (`@v1.20.13`) to bump deliberately.
 Not on GitHub or GitLab? `corgi cache paths` prints the same plan anywhere —
 newline-separated paths, `--key` for the key, `--json` for the per-ecosystem
 groups — so a Buildkite or Jenkins job can build its cache config from it too.
+Run it after the service directories exist: it warns (a `::warning::`
+annotation under GitHub Actions) when a `cacheKey` file is missing, `--json`
+reports `complete: false` with the files under `missingFiles`, and `--strict`
+exits 1.
 
 ## The GitLab include
 
@@ -255,13 +277,29 @@ required:
   space up front rather than debugging a confusing mid-run failure.
 - **Caching.** `corgi cache paths` tells you when nothing opts in, naming each
   install step and the lockfile to key it on. Give each `beforeStart` install
-  step a `cacheKey` pointing at its lockfile, then let `corgi cache paths` (or the action's outputs) tell the cache
-  what to restore. Both halves of the plan are required: the dependency
-  directories are the actual saving, and `.corgi/corgi_services/.cache/` holds the
-  markers that let corgi skip an unchanged step — markers without the
-  dependency directory would skip an install that is genuinely needed. Worktrees
+  step a `cacheKey` pointing at its lockfile, then let `corgi cache paths` (or
+  the cache action's outputs) tell the cache what to restore — after
+  `corgi init`, so the lockfiles are there to hash. A step that produces a
+  dependency directory (`node_modules`, `.venv`, `target`, …) keeps its
+  "already ran" marker inside that directory (`node_modules/.corgi-step-0`),
+  so the cache restores the two together and an older `node_modules` brings an
+  older marker that no longer matches. `.corgi/corgi_services/.cache/` holds
+  the markers for steps with no directory of their own (`go.sum`); restoring it
+  without the dependency directory would skip an install that is genuinely
+  needed, which is why corgi also checks the directory exists. Worktrees
   created by `--feature` get their own marker scope, so they never inherit the
   main checkout's.
+- **`beforeStart skipped (cacheKey unchanged)` but a module is missing.** Up
+  to corgi 2.22.8, a workflow that restored the cache from the install action's
+  outputs — before `corgi init` — hashed a key from lockfiles that were not
+  cloned yet. That key never changed, so `actions/cache` never re-saved
+  `node_modules`, while the step markers lived in a separate cache entry that
+  expired on its own schedule. Once the markers entry was refreshed by a run
+  that did install, the next run restored fresh markers next to weeks-old
+  packages, skipped the install, and failed at boot with an unresolved module.
+  Fix: move the cache plan after `corgi init` (the `Andriiklymiuk/corgi/cache`
+  action), and upgrade — corgi now warns or fails when a `cacheKey` file is
+  missing, and keeps the marker inside the directory it vouches for.
 
 ## Want it written for you?
 
