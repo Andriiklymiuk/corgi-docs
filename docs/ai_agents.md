@@ -70,15 +70,45 @@ corgi ps --json                               # inspect real status
 corgi stop
 ```
 
-## Claude Code plugin
+## Install corgi's skills
 
-This project ships a [Claude Code](https://claude.com/claude-code) plugin so Claude
-can author your `corgi-compose.yml`, run corgi, and debug failures accurately:
+**Claude Code** — one marketplace, one plugin:
 
 ```
 /plugin marketplace add Andriiklymiuk/corgi
 /plugin install corgi@corgi
 ```
+
+or from a shell:
+
+```bash
+claude plugin marketplace add Andriiklymiuk/corgi
+claude plugin install corgi@corgi
+```
+
+Restart Claude Code afterwards: a newly installed plugin's skills appear on
+the next start.
+
+**Any other agent** — Codex, Cursor, Cline, Droid, Antigravity and the rest
+read the same skills through the `skills` CLI:
+
+```bash
+npx skills add Andriiklymiuk/corgi
+```
+
+It writes them to `.agents/skills/` and wires up whichever agent it finds.
+Use one method or the other, not both.
+
+**Or paste this at your agent** and let it do the reading:
+
+> Install corgi's agent skills: run `npx skills add Andriiklymiuk/corgi`, or
+> read them directly from
+> `https://github.com/Andriiklymiuk/corgi/tree/main/plugins/corgi/skills`
+> — `run` boots the stack, `debug` diagnoses it, `stories` ships tracker
+> tickets as draft PRs, `review` reviews existing PRs, `ship` releases a
+> mobile app. Then use them on this project: it has a `corgi-compose.yml`,
+> so prefer `corgi run` / `corgi doctor` / `corgi status` over inventing
+> commands.
 
 It adds:
 

@@ -154,6 +154,9 @@ This repo ships a [Claude Code](https://claude.com/claude-code) plugin so an AI 
 /plugin install corgi@corgi
 ```
 
+Not using Claude Code? `npx skills add Andriiklymiuk/corgi` installs the same
+skills for Codex, Cursor, Cline, Droid and the rest — see [AI agents](ai_agents).
+
 Then in any project that has a `corgi-compose.yml`, Claude will recognize it and use `corgi run` / `corgi doctor` / `corgi status` instead of inventing its own commands. The skills cover the whole loop: `/corgi-run` boots the stack (or a slice) detached and waits until healthy; `/corgi-debug` diagnoses a stack local-first and pulls deployed logs for a bug on demand; `/corgi-suggest` proposes ranked, measurable product + engineering improvements; `/corgi:stories` turns a batch of tracker issues (or a feature description) into a **draft** PR per service; `/corgi:review` reviews those PRs/MRs against your repo's standards and posts inline suggestions. Plus `/corgi-new` to scaffold a fresh `corgi-compose.yml` and `/corgi-describe` for a service map. See [AI agents](ai_agents) for the full picture.
 
 ## Services creation
