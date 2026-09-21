@@ -62,6 +62,6 @@ In `do not save` section ✅ `owner`,`privilege`, `unlogged table data` fields
 
 In `queries` section ✅ everything, except `Load via partition root`
 
-Thanks to Nicolas for provided info nicolas.zamarreno@skeepers.io
+Thanks to Nicolas for the provided info.
 
 [Main docs](/docs/intro)
