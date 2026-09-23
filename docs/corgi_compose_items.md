@@ -72,7 +72,7 @@ Your apps and servers. corgi clones them, generates a `.env`, and runs them.
 | `runner` | `string\|object` | `docker` (shorthand) or `{ name, dockerfile, context, target, args, volumes, containerPort, command, composeFile }`. See [Dockerfile services](./dockerfile_services.md). |
 | `waitForDatabases` | `bool` | Default `true`. `false` starts the service alongside the databases (it still gets their env). |
 | `beforeStart` | `[string\|object]` | Run before `start`. Object form `{ run, cacheKey: [files] }` skips the step when those files' hash is unchanged (`--no-cache` forces it). |
-| `start` | `[string]` | Main, blocking command(s) — run in parallel across services. |
+| `start` | `[string]` | Main, blocking command(s) - run in parallel across services. |
 | `afterStart` | `[string]` | Run on exit (also on single-service stop/restart). |
 | `restartPolicy` | `{ mode, maxRetries, backoffSeconds }` | Auto-heal a detached service that crashes at startup. `mode: on-failure \| never`. |
 | `openOnReady` | `bool\|object` | Open the URL when `healthCheck` passes (needs `corgi run --open`). |
@@ -182,9 +182,9 @@ envTiers:
 The whole file is interpolated **before** parsing, so `${VAR}` works in any string
 field (ports, passwords, paths, image refs, `environment` entries):
 
-- `${VAR}` — value of `VAR`.
-- `${VAR:-default}` — `VAR`, or `default` when unset/empty.
-- `$${X}` — literal `${X}` (not expanded).
+- `${VAR}` - value of `VAR`.
+- `${VAR:-default}` - `VAR`, or `default` when unset/empty.
+- `$${X}` - literal `${X}` (not expanded).
 - Bare `$VAR` is left untouched (safe for shell snippets).
 - Dotted `${producer.VAR}` cross-service refs resolve later, from `exports`.
 

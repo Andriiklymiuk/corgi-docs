@@ -4,21 +4,21 @@ sidebar_position: 4
 
 # Run a branch or worktree
 
-Point any service at a git branch or an external checkout **for a single run** —
+Point any service at a git branch or an external checkout **for a single run** -
 without editing `path:` in `corgi-compose.yml`. The flags are per-service and
 repeatable; any service you don't flag runs from its compose `path:` as usual.
 They work on `corgi run`, `corgi exec`, and `corgi test`, and all three repoint the
-service's working dir — so its env generation, `beforeStart`/`afterStart`, and
+service's working dir - so its env generation, `beforeStart`/`afterStart`, and
 process all run there.
 
 ## The flags
 
 | Flag | What it does | Destructive? |
 |------|--------------|--------------|
-| `--service-branch <svc>=<branch>` | Runs the service from a **reused git worktree** under `.corgi/corgi_services/.worktrees/<svc>-<branch>` | No — main checkout untouched |
+| `--service-branch <svc>=<branch>` | Runs the service from a **reused git worktree** under `.corgi/corgi_services/.worktrees/<svc>-<branch>` | No - main checkout untouched |
 | `--service-dir <svc>=<path>` | Runs the service from an existing directory you already have | No |
-| `--service-checkout <svc>=<branch>` | `git checkout <branch>` **in place** in the service's `path:` | Yes — refuses on a dirty tree, leaves the repo on that branch |
-| `--feature <branch>` | Runs **every** service whose repo has that branch from a worktree for it; the rest stay on their current checkout | No — main checkouts untouched |
+| `--service-checkout <svc>=<branch>` | `git checkout <branch>` **in place** in the service's `path:` | Yes - refuses on a dirty tree, leaves the repo on that branch |
+| `--feature <branch>` | Runs **every** service whose repo has that branch from a worktree for it; the rest stay on their current checkout | No - main checkouts untouched |
 
 A service may appear in only one of the first three at a time. `--feature` is
 fleet-wide and yields to any of them for a service they name.
@@ -51,10 +51,10 @@ touches. `--feature` takes that name once and applies it everywhere it exists:
 corgi run --feature ABC-123-checkout-flow --detach --wait
 ```
 
-For every service corgi asks its repo whether the branch exists — as a local head
+For every service corgi asks its repo whether the branch exists - as a local head
 or on `origin`. Services that have it run from a worktree for it; services that
 don't stay on whatever they are checked out at. Nothing is checked out in place,
-and a missing branch is never an error — that asymmetry is the point, since a
+and a missing branch is never an error - that asymmetry is the point, since a
 feature rarely touches the whole stack.
 
 A remote-only branch is fetched first, so a fresh (or `--depth 1`) clone works
@@ -70,7 +70,7 @@ PR's branch name once, and every repo that carries the change joins the run.
 The worktree path is deterministic per `(service, branch)`. On each run corgi
 prunes stale entries and then:
 
-- **reuses** the worktree if it already exists and is healthy — keeping installed
+- **reuses** the worktree if it already exists and is healthy - keeping installed
   deps (`node_modules`, etc.) and any uncommitted work in it;
 - **creates** it (`git worktree add`) only when missing or broken.
 

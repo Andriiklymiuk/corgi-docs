@@ -30,7 +30,7 @@
   --corgi-terminal-fg: #F2E7D6;
   --corgi-terminal-comment: color-mix(in oklab, var(--corgi-terminal-fg) 55%, transparent);
 
-  /* Hero surface tokens — light mode defaults */
+  /* Hero surface tokens - light mode defaults */
   --corgi-hero-bg: #FFF6E9;
   --corgi-hero-fg: #2A1810;
   --corgi-hero-fg-soft: color-mix(in oklab, var(--corgi-hero-fg) 72%, transparent);
@@ -76,7 +76,7 @@ h1 {
   font-variation-settings: 'opsz' 144;
 }
 
-/* Tab pills — used on hero install picker. Scoped so docs tabs aren't affected. */
+/* Tab pills - used on hero install picker. Scoped so docs tabs aren't affected. */
 .installTabsRoot .tabs {
   border-bottom: none;
   gap: 0.4rem;

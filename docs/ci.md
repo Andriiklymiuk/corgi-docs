@@ -5,14 +5,14 @@ sidebar_position: 8
 # Run the stack in CI
 
 The same `corgi-compose.yml` that boots your machine boots a CI runner. Nothing
-about corgi changes in CI — databases still come up in Docker, services still run
-as host processes — but a few pieces exist to make the run non-interactive, cheap,
+about corgi changes in CI - databases still come up in Docker, services still run
+as host processes - but a few pieces exist to make the run non-interactive, cheap,
 and diagnosable after the fact.
 
 ## Why bother
 
 Testing a service against a deployed environment only proves that service. When a
-change spans repos — a schema field, a new event, a template the frontend reads —
+change spans repos - a schema field, a new event, a template the frontend reads -
 each repo's own pipeline is green while the combination is broken. Booting the
 whole stack from the branches under review is the only check that sees it.
 
@@ -33,7 +33,7 @@ corgi ci init --provider gitlab    # or say so
 GitHub gets `.github/workflows/stack-e2e.yml`. GitLab gets `.gitlab-ci.yml`
 plus `.gitlab/corgi-cache.yml` generated from this compose. Neither overwrites
 an existing file without `--force`, and both print what the workspace still has
-to supply — runner tags, the clone token, the env files, and an `e2e:` block if
+to supply - runner tags, the clone token, the env files, and an `e2e:` block if
 the compose has none.
 
 ## A full-stack job
@@ -49,7 +49,7 @@ corgi logs --dump ./ci-logs                           # always, for artifacts
 
 A failed `beforeStart` fails the run: `--wait` returns it immediately instead of
 waiting out the readiness timeout, and a run without `--wait` exits non-zero.
-Older pipelines grep the logs for `aborting beforeStart` — that step can be
+Older pipelines grep the logs for `aborting beforeStart` - that step can be
 deleted.
 
 `--feature` is what makes this work across repos: pass the branch name once and
@@ -61,13 +61,13 @@ checkout. See [Run a branch or worktree](./branch_and_worktree).
 The tool, Docker and port checks run everywhere. On a runner it adds two more,
 and stays silent about both on a laptop where they are normal mid-setup states:
 
-- **disk headroom** — free space against a rough estimate from the database and
+- **disk headroom** - free space against a rough estimate from the database and
   service counts, because running out mid-boot surfaces as a random service
   failing to build, never as a disk message
-- **the job is running inside a container** — the database containers would
+- **the job is running inside a container** - the database containers would
   publish to a localhost the services cannot reach, which surfaces as "the api
   can't reach postgres" rather than as a runner problem
-- **a `copyEnvFromFilePath` that is not on the runner** — those files are almost
+- **a `copyEnvFromFilePath` that is not on the runner** - those files are almost
   always gitignored, and corgi otherwise falls back to a committed
   `.env-example` whose placeholder values start the service and then fail at the
   first request, thousands of lines from the cause
@@ -75,8 +75,8 @@ and stays silent about both on a laptop where they are normal mid-setup states:
 ## The stack's e2e suite
 
 Each service can carry its own `scripts.test`, run with plain `corgi test`. A
-suite that drives several services at once — sign up in the web app, hit the
-api, read the confirmation mail out of the local SMTP sink — belongs to the
+suite that drives several services at once - sign up in the web app, hit the
+api, read the confirmation mail out of the local SMTP sink - belongs to the
 stack, not to any one repo. Declare it once in `corgi-compose.yml`:
 
 ```yml
@@ -88,7 +88,7 @@ e2e:
 
 `corgi test --e2e` runs it against the already-running stack. It deliberately
 starts nothing itself: booting is `corgi run`'s job, and keeping the two apart
-means a red run always tells you which half failed — the boot or the tests. The
+means a red run always tells you which half failed - the boot or the tests. The
 same two commands work on your laptop (`corgi run -d --wait`, then
 `corgi test --e2e`), so the e2e suite isn't a CI-only ritual.
 
@@ -114,7 +114,7 @@ after `corgi init`, tells `actions/cache` what to keep:
 The order matters. The cache keys are hashed from every service's `cacheKey`
 lockfile, and those files do not exist until `corgi init` clones the service
 repos. Computed before that, the key is hashed from nothing, comes out the same
-on every run, and `actions/cache` never saves a new entry — the dependencies
+on every run, and `actions/cache` never saves a new entry - the dependencies
 freeze at whatever the first run installed. The install action still publishes
 the same cache outputs for older workflows, but warns when it computed them
 from missing files; the cache action fails the step instead
@@ -131,8 +131,8 @@ publishes `version`.
 | output | |
 |---|---|
 | `version` | (install action) The corgi version that was installed. |
-| `cache-paths` | Newline-separated directories worth caching — pass straight to `actions/cache`'s `path`. |
-| `cache-key` | Key that changes whenever any `cacheKey` file changes — pass straight to its `key`. |
+| `cache-paths` | Newline-separated directories worth caching - pass straight to `actions/cache`'s `path`. |
+| `cache-key` | Key that changes whenever any `cacheKey` file changes - pass straight to its `key`. |
 | `cache-groups` | The same plan split per ecosystem, as JSON (`{id, key, paths, pathsText}` per group). One `actions/cache` step per group keeps a change to one language's lockfile from evicting every other language's packages. |
 | `cache-1-key` … `cache-4-key` | The same groups as four fixed slots, empty when unused. A workflow expression cannot loop, so write four plain cache steps reading these instead of indexing `fromJSON(cache-groups)`. |
 | `cache-1-paths` … `cache-4-paths` | Newline-separated paths for the matching slot. |
@@ -144,9 +144,9 @@ it against the published `checksums.txt` before installing, so a tampered or
 truncated download fails instead of executing. `@v1` moves with each release;
 pin an exact tag (`@v1.20.13`) to bump deliberately.
 
-Not on GitHub or GitLab? `corgi cache paths` prints the same plan anywhere —
+Not on GitHub or GitLab? `corgi cache paths` prints the same plan anywhere -
 newline-separated paths, `--key` for the key, `--json` for the per-ecosystem
-groups — so a Buildkite or Jenkins job can build its cache config from it too.
+groups - so a Buildkite or Jenkins job can build its cache config from it too.
 Run it after the service directories exist: it warns (a `::warning::`
 annotation under GitHub Actions) when a `cacheKey` file is missing, `--json`
 reports `complete: false` with the files under `missingFiles`, and `--strict`
@@ -171,7 +171,7 @@ stack-e2e:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"
 ```
 
-Pin the remote to a tag once it works — an include is fetched fresh on every
+Pin the remote to a tag once it works - an include is fetched fresh on every
 pipeline, so `main` would change under you.
 
 | input | |
@@ -188,7 +188,7 @@ pipeline, so `main` would change under you.
 
 It defines two job templates. `.corgi-setup` installs corgi from a
 checksum-verified release archive and **fails fast when the job is running
-inside a container** — the number one reason a GitLab port dies in a way that
+inside a container** - the number one reason a GitLab port dies in a way that
 looks like "the api cannot reach postgres". `.corgi-stack-e2e` is the whole
 cross-repo run: clone at the branch, boot, catch a silent `beforeStart`
 failure, gate on `corgi status --json`, run `corgi test --e2e`, and dump logs
@@ -196,7 +196,7 @@ and artifacts in an always-executed `after_script`.
 
 ### Each service repo calls it
 
-Same shape as GitHub's reusable workflow — one file per participating repo:
+Same shape as GitHub's reusable workflow - one file per participating repo:
 
 ```yaml
 include:
@@ -225,7 +225,7 @@ corgi cache paths --gitlab --out .gitlab/corgi-cache.yml    # once, and after an
 corgi cache paths --gitlab --check .gitlab/corgi-cache.yml  # in CI: fails when it drifts
 ```
 
-Commit the result and keep `--check` in the pipeline — a generated file that
+Commit the result and keep `--check` in the pipeline - a generated file that
 nothing verifies is a list that silently stops matching the compose file.
 
 Two GitLab rules shape the output. Caches "can't link to files outside" the
@@ -237,7 +237,7 @@ tail is merged into one entry.
 Keys are branch-scoped with a fallback to the default branch rather than hashed
 from lockfiles: corgi clones the service repos *during* the job, so no lockfile
 exists yet when GitLab would compute a `key:files`. A warm-but-stale restore is
-safe anyway — corgi re-hashes every `cacheKey` and checks the dependency
+safe anyway - corgi re-hashes every `cacheKey` and checks the dependency
 directory is really present before it skips an install, so the worst case is a
 reinstall rather than a service started against packages that are not there.
 
@@ -250,12 +250,12 @@ root and nothing else.
 | Flag | Why |
 |------|-----|
 | `corgi init --depth 1` | Shallow clone per service repo. `--feature` fetches any branch it needs afterwards, so nothing is lost. |
-| `corgi run --detach --wait` | Boots in the background and blocks until every service is healthy — no `sleep 60` guesswork. |
+| `corgi run --detach --wait` | Boots in the background and blocks until every service is healthy - no `sleep 60` guesswork. |
 | `corgi run --wait-timeout <d>` | Bounds the wait so a wedged service fails the job instead of hanging the runner. |
 | `corgi run --follow` | With `--detach --wait`: streams every service's log while waiting, so the job output shows what the boot was doing. |
 | `corgi status --json` | Machine-readable health for a gate step. |
 | `corgi test --e2e` | Runs the compose file's `e2e:` block against the live stack. |
-| `corgi logs --dump <dir>` | Copies the newest run of every service into one directory to upload as build artifacts. Run it in an always-executed step — the logs matter most when the job failed. |
+| `corgi logs --dump <dir>` | Copies the newest run of every service into one directory to upload as build artifacts. Run it in an always-executed step - the logs matter most when the job failed. |
 | `skipInCi` on a required tool | Drops tools only a human needs (a tunnel client, say) from preflight. |
 
 ```yaml
@@ -278,7 +278,7 @@ required:
 - **Caching.** `corgi cache paths` tells you when nothing opts in, naming each
   install step and the lockfile to key it on. Give each `beforeStart` install
   step a `cacheKey` pointing at its lockfile, then let `corgi cache paths` (or
-  the cache action's outputs) tell the cache what to restore — after
+  the cache action's outputs) tell the cache what to restore - after
   `corgi init`, so the lockfiles are there to hash. A step that produces a
   dependency directory (`node_modules`, `.venv`, `target`, …) keeps its
   "already ran" marker inside that directory (`node_modules/.corgi-step-0`),
@@ -291,19 +291,19 @@ required:
   main checkout's.
 - **`beforeStart skipped (cacheKey unchanged)` but a module is missing.** Up
   to corgi 2.22.8, a workflow that restored the cache from the install action's
-  outputs — before `corgi init` — hashed a key from lockfiles that were not
+  outputs - before `corgi init` - hashed a key from lockfiles that were not
   cloned yet. That key never changed, so `actions/cache` never re-saved
   `node_modules`, while the step markers lived in a separate cache entry that
   expired on its own schedule. Once the markers entry was refreshed by a run
   that did install, the next run restored fresh markers next to weeks-old
   packages, skipped the install, and failed at boot with an unresolved module.
   Fix: move the cache plan after `corgi init` (the `Andriiklymiuk/corgi/cache`
-  action), and upgrade — corgi now warns or fails when a `cacheKey` file is
+  action), and upgrade - corgi now warns or fails when a `cacheKey` file is
   missing, and keeps the marker inside the directory it vouches for.
 
 ## Want it written for you?
 
 If you use the [Claude Code plugin](./ai_agents), `/corgi-ci` generates
-this whole pipeline for your workspace — GitHub Actions or GitLab CI — and knows
+this whole pipeline for your workspace - GitHub Actions or GitLab CI - and knows
 the failure modes that usually eat the first afternoon (health checks that do
 work per probe, silent `beforeStart` failures, containerised jobs).

@@ -6,13 +6,13 @@ sidebar_position: 2
 
 ![Purpose](/img/purpose.jpeg)
 
-corgi exists to make running a multi-service project a non-event — something you
+corgi exists to make running a multi-service project a non-event - something you
 do every day with one command instead of a morning of setup.
 
 A modern app is rarely one repo. It's a few services, a database or two, some
 infra (a queue, a cache, an S3-alike), env vars wired between all of it, and a
-list of tools everyone is supposed to have installed. Standing that up by hand —
-or keeping it running — is the same slog whether you just joined the team, picked
+list of tools everyone is supposed to have installed. Standing that up by hand -
+or keeping it running - is the same slog whether you just joined the team, picked
 up a new laptop, or started a fresh project.
 
 `docker-compose` handles the _containers_. corgi handles everything around them:
@@ -20,7 +20,7 @@ it git-clones the service repos, starts and **seeds** the databases in Docker
 (using docker-compose under the hood per db), auto-wires the env vars between
 services, checks the tools you need, and runs everything together. Your databases
 run in containers; your services run as normal processes. One file describes it
-all, and the same file is how you run the stack from then on — fully local, or
+all, and the same file is how you run the stack from then on - fully local, or
 with part of it pointed at staging.
 
 Here is example, that we will explain, based on
@@ -88,7 +88,7 @@ required:
 ## What happens on init
 
 1. It adds `.corgi/corgi_services/*`, `.env*`, and any cloned service directories to your
-   project's `.gitignore` — so generated env files (including secrets) and corgi's
+   project's `.gitignore` - so generated env files (including secrets) and corgi's
    working state never get committed. Your `corgi-compose.yml` itself is **not**
    ignored; that's the file you commit and share.
 2. Creates folder with db helpers files in in `.corgi/corgi_services/db_services`
@@ -134,14 +134,14 @@ If you run `corgi run` it will:
 
 A few commands round out the day-to-day loop:
 
-- **`corgi doctor`** — preflight before `run`: checks every tool in `required:`,
+- **`corgi doctor`** - preflight before `run`: checks every tool in `required:`,
   that Docker is up, and that all ports are free. `--fix` auto-remediates.
-- **`corgi status`** (`-w` watch, `-r` ready) — probes each service's port (and
+- **`corgi status`** (`-w` watch, `-r` ready) - probes each service's port (and
   `healthCheck:` path) and reports healthy / unhealthy.
-- **`corgi run --detach`** — start everything in the background, write
+- **`corgi run --detach`** - start everything in the background, write
   `.corgi/corgi_services/.state.json`, and return immediately; manage it later with
   `corgi ps` / `corgi stop`.
-- **`corgi run --service-branch api=feature/x`** — run a single service on a git
+- **`corgi run --service-branch api=feature/x`** - run a single service on a git
   branch in an isolated worktree, without touching your checkout. See
   [Run a branch or worktree](branch_and_worktree).
 
