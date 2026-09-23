@@ -6,7 +6,7 @@ sidebar_position: 7
 
 corgi is designed to be driven by AI agents and scripts, not only typed by hand.
 It detects non-interactive environments and never hangs on a prompt, speaks pure
-JSON when asked, and exposes stable exit and error codes an agent can branch on —
+JSON when asked, and exposes stable exit and error codes an agent can branch on -
 so an LLM can run your stack, read real status, and fix the right thing.
 
 ## Non-interactive mode
@@ -48,8 +48,8 @@ corgi stop                       # stop everything from state
 
 ## Run a branch without touching the repo
 
-Agents often need to run a specific branch — a PR under review, or their own work
-— without disturbing the developer's checkout. Use `--service-branch`, which runs
+Agents often need to run a specific branch - a PR under review, or their own work -
+without disturbing the developer's checkout. Use `--service-branch`, which runs
 the service from an isolated, reused git worktree:
 
 ```bash
@@ -72,7 +72,7 @@ corgi stop
 
 ## Install corgi's skills
 
-**Claude Code** — one marketplace, one plugin:
+**Claude Code** - one marketplace, one plugin:
 
 ```
 /plugin marketplace add Andriiklymiuk/corgi
@@ -89,7 +89,7 @@ claude plugin install corgi@corgi
 Restart Claude Code afterwards: a newly installed plugin's skills appear on
 the next start.
 
-**Any other agent** — Codex, Cursor, Cline, Droid, Antigravity and the rest
+**Any other agent** - Codex, Cursor, Cline, Droid, Antigravity and the rest
 read the same skills through the `skills` CLI:
 
 ```bash
@@ -104,7 +104,7 @@ Use one method or the other, not both.
 > Install corgi's agent skills: run `npx skills add Andriiklymiuk/corgi`, or
 > read them directly from
 > `https://github.com/Andriiklymiuk/corgi/tree/main/plugins/corgi/skills`
-> — `run` boots the stack, `debug` diagnoses it, `stories` ships tracker
+> - `run` boots the stack, `debug` diagnoses it, `stories` ships tracker
 > tickets as draft PRs, `review` reviews existing PRs, `ship` releases a
 > mobile app. Then use them on this project: it has a `corgi-compose.yml`,
 > so prefer `corgi run` / `corgi doctor` / `corgi status` over inventing
@@ -112,20 +112,20 @@ Use one method or the other, not both.
 
 It adds:
 
-- `/corgi-run` — boot the stack (or a slice) detached and wait until healthy; tunnel,
+- `/corgi-run` - boot the stack (or a slice) detached and wait until healthy; tunnel,
   logs, remote-backend, emulator-host, and per-service branch/worktree
   (`--service-branch`/`--service-dir`) modes included.
-- `/corgi-debug` — diagnose a stack local-first (`ps`/`status`/`doctor`/`logs`), or
+- `/corgi-debug` - diagnose a stack local-first (`ps`/`status`/`doctor`/`logs`), or
   pull runtime/deployed logs for a bug from your stack's own provider (Coralogix,
-  CloudWatch/ECS, Datadog… — auto-detected from your README), on demand.
-- `/corgi-ci` — generate (or fix) the CI pipeline that boots the whole stack and runs
-  cross-repo e2e on every PR — GitHub Actions or GitLab CI, with caching, health
+  CloudWatch/ECS, Datadog… - auto-detected from your README), on demand.
+- `/corgi-ci` - generate (or fix) the CI pipeline that boots the whole stack and runs
+  cross-repo e2e on every PR - GitHub Actions or GitLab CI, with caching, health
   gates, and log artifacts baked in. See [Run the stack in CI](./ci).
-- `/corgi-suggest` — ranked, evidence-backed product + engineering improvements, each
+- `/corgi-suggest` - ranked, evidence-backed product + engineering improvements, each
   tied to a measurable outcome; specs the one you pick and can open a tracker story.
-- `corgi:stories` — turn tracker issues or a feature description into spec'd, tested,
+- `corgi:stories` - turn tracker issues or a feature description into spec'd, tested,
   reviewed draft PRs (each service in its own worktree).
-- `corgi:review` — review existing GitHub/GitLab PRs/MRs against your repo's standards
+- `corgi:review` - review existing GitHub/GitLab PRs/MRs against your repo's standards
   and the linked ticket.
 - `/corgi-new` (scaffold a compose file) and `/corgi-describe` (service map + Mermaid
   diagram).

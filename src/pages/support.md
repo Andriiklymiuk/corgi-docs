@@ -1,18 +1,18 @@
 ---
-title: Support — corgi phone app
+title: Support - corgi phone app
 description: How to pair the corgi phone app with your laptop, and what to do when it will not connect.
 ---
 
-# corgi for iPhone — support
+# corgi for iPhone - support
 
 The phone app is a remote for the corgi daemon on your own computer: every
-Claude Code session, the tickets, the workspaces — and Allow / Deny, Send,
+Claude Code session, the tickets, the workspaces - and Allow / Deny, Send,
 Interrupt, Work on it from wherever you are.
 
 ## Setting up
 
 1. On the laptop: `brew install andriiklymiuk/homebrew-tools/corgi`
-2. In your project: `claude`, then `/corgi:setup` — Claude configures the daemon,
+2. In your project: `claude`, then `/corgi:setup` - Claude configures the daemon,
    the tracker and the hooks for you.
 3. `corgi agent up` prints a QR code. Scan it from the app (or paste the link).
 

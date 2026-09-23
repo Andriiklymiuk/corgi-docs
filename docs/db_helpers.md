@@ -77,7 +77,7 @@ Use the arrow keys to navigate: ↓ ↑ → ←
 
 ## Open a SQL shell
 
-Jump straight into a running database — credentials come from
+Jump straight into a running database - credentials come from
 `corgi-compose.yml`, no copy-pasting passwords:
 
 ```bash

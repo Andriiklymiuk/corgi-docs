@@ -38,23 +38,23 @@ function HomepageHeader() {
         <div className={clsx(styles.installShell, styles.heroFadeInDelay, 'installTabsRoot')}>
           <Tabs groupId="install">
             <TabItem value="brew" label="Homebrew" default>
-              <TerminalBlock label="zsh — macOS / Linux" language="bash">
+              <TerminalBlock label="zsh - macOS / Linux" language="bash">
                 {"brew install andriiklymiuk/homebrew-tools/corgi"}
               </TerminalBlock>
             </TabItem>
             <TabItem value="script" label="Install script">
-              <TerminalBlock label="zsh — no Homebrew needed" language="bash">
+              <TerminalBlock label="zsh - no Homebrew needed" language="bash">
                 {"curl -fsSL https://raw.githubusercontent.com/Andriiklymiuk/corgi/main/install.sh | sh"}
               </TerminalBlock>
             </TabItem>
             <TabItem value="powershell" label="PowerShell">
-              <TerminalBlock label="pwsh — Windows" language="powershell">
+              <TerminalBlock label="pwsh - Windows" language="powershell">
                 {"irm https://raw.githubusercontent.com/Andriiklymiuk/corgi/main/install.ps1 | iex"}
               </TerminalBlock>
             </TabItem>
             <TabItem value="claude" label="Claude Code">
-              <TerminalBlock label="Claude Code — install the plugin" language="text">
-                {"/plugin marketplace add Andriiklymiuk/corgi\n/plugin install corgi@corgi\n\n# also install the corgi CLI (see the other tabs) — the plugin shells out to it"}
+              <TerminalBlock label="Claude Code - install the plugin" language="text">
+                {"/plugin marketplace add Andriiklymiuk/corgi\n/plugin install corgi@corgi\n\n# also install the corgi CLI (see the other tabs) - the plugin shells out to it"}
               </TerminalBlock>
             </TabItem>
           </Tabs>

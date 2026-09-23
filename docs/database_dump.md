@@ -21,7 +21,7 @@ corgi db                  # → choose service → choose "dump"
 
 ## From the CLI (pg_dump)
 
-For Postgres, a one-liner — no GUI needed:
+For Postgres, a one-liner - no GUI needed:
 
 ```bash
 pg_dump "postgresql://$DB_USER:$DB_PASSWORD@$DB_HOST:$DB_PORT/$DB_NAME" \

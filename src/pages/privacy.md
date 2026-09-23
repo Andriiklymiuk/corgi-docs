@@ -1,6 +1,6 @@
 ---
-title: Privacy policy — corgi phone app
-description: What the corgi phone app does with your data — nothing leaves your own laptop.
+title: Privacy policy - corgi phone app
+description: What the corgi phone app does with your data - nothing leaves your own laptop.
 ---
 
 # Privacy policy
@@ -28,7 +28,7 @@ Forgetting the last laptop wipes all of it.
 
 ## What travels, and where
 
-Every request goes from the phone to your laptop's corgi endpoint — over your
+Every request goes from the phone to your laptop's corgi endpoint - over your
 LAN, a Tailscale network, or a tunnel you started (cloudflared, ngrok). With
 corgi 2.20.12 and app 1.0.7 or later, every request and response body is
 end-to-end encrypted between the phone and the laptop (X25519, HKDF, AES-256-GCM),
@@ -47,7 +47,7 @@ the same laptops; nothing new is sent anywhere.
 - No account, no sign-in, no email collection.
 - No analytics or tracking of any kind, no advertising identifiers.
 - No servers of ours: the app cannot send us anything, and does not.
-- No selling or sharing of data — there is none to sell.
+- No selling or sharing of data - there is none to sell.
 
 ## Your laptop
 
@@ -57,5 +57,5 @@ tracker you configured, your git checkouts) stays on that laptop. See the
 
 ## Contact
 
-Questions: gradli.inc@gmail.com — or open an issue on
+Questions: gradli.inc@gmail.com - or open an issue on
 [GitHub](https://github.com/andriiklymiuk/corgi/issues).
