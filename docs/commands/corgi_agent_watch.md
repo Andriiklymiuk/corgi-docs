@@ -56,6 +56,7 @@ corgi agent watch [flags]
 * [corgi agent watch board](corgi_agent_watch_board)	 - The tracker columns corgi knows, and who your token is
 * [corgi agent watch comment](corgi_agent_watch_comment)	 - Post a comment on a ticket, pictures, videos and documents included
 * [corgi agent watch disable](corgi_agent_watch_disable)	 - Stop watching this workspace
+* [corgi agent watch done](corgi_agent_watch_done)	 - A ticket or pull request is handled on this side: its inbox rows so far leave, later ones still come
 * [corgi agent watch enable](corgi_agent_watch_enable)	 - Watch this workspace (run inside it)
 * [corgi agent watch hooks](corgi_agent_watch_hooks)	 - Webhooks for instant events: the plan per workspace, and --install for GitHub and GitLab
 * [corgi agent watch ignore](corgi_agent_watch_ignore)	 - Take a ticket out of the inbox for good
